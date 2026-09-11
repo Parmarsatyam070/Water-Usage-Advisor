@@ -261,5 +261,43 @@ def get_dashboard_payload(user_id: int = 1) -> Dict[str, Any]:
         "goals": ds.get_goals(user_id=user_id)
     }
 
+# ==============================================================================
+# PHASE 5: INTEGRATION & HEALTH INTERFACES
+# ==============================================================================
+
+def get_system_health() -> Dict[str, Any]:
+    """
+    Returns high-level operational status of models, detectors, and data services.
+    """
+    forecasting_ok = False
+    try:
+        forecaster = load_model()
+        forecasting_ok = forecaster is not None and forecaster.model is not None
+    except Exception:
+        forecasting_ok = False
+
+    anomaly_ok = False
+    try:
+        detector = load_anomaly_detector()
+        anomaly_ok = detector is not None and detector.is_fitted
+    except Exception:
+        anomaly_ok = False
+
+    chatbot_ok = False
+    try:
+        bot = load_chatbot()
+        chatbot_ok = bot is not None and bot.kb is not None and len(bot.kb.entries) > 0
+    except Exception:
+        chatbot_ok = False
+
+    return {
+        "forecasting_model_loaded": forecasting_ok,
+        "anomaly_detector_loaded": anomaly_ok,
+        "chatbot_ready": chatbot_ok,
+        "all_systems_operational": forecasting_ok and anomaly_ok and chatbot_ok
+    }
+
+
+
 
 

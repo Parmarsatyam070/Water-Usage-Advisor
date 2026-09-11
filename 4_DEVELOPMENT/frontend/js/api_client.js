@@ -9,13 +9,29 @@
 export class DashboardApiClient {
   constructor(baseUrl = "") {
     this.baseUrl = baseUrl;
+    this.authToken = null;
+  }
+
+  setAuthToken(token) {
+    this.authToken = token;
+  }
+
+  _getHeaders(extraHeaders = {}) {
+    const headers = { ...extraHeaders };
+    if (this.authToken) {
+      headers["Authorization"] = `Bearer ${this.authToken}`;
+    }
+    return headers;
   }
 
   async fetchSummary(userId = 1) {
     try {
-      const response = await fetch(`${this.baseUrl}/api/dashboard/summary?user_id=${userId}`);
+      const response = await fetch(`${this.baseUrl}/api/dashboard/summary?user_id=${userId}`, {
+        headers: this._getHeaders()
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to fetch summary`);
       return await response.json();
+
     } catch (err) {
       console.error("ApiClient: Failed to fetch summary", err);
       throw err;
@@ -24,7 +40,9 @@ export class DashboardApiClient {
 
   async fetchConsumption(userId = 1, range = "30d") {
     try {
-      const response = await fetch(`${this.baseUrl}/api/dashboard/consumption?user_id=${userId}&range=${range}`);
+      const response = await fetch(`${this.baseUrl}/api/dashboard/consumption?user_id=${userId}&range=${range}`, {
+        headers: this._getHeaders()
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to fetch consumption`);
       return await response.json();
     } catch (err) {
@@ -35,7 +53,9 @@ export class DashboardApiClient {
 
   async fetchForecast(userId = 1) {
     try {
-      const response = await fetch(`${this.baseUrl}/api/dashboard/forecast?user_id=${userId}`);
+      const response = await fetch(`${this.baseUrl}/api/dashboard/forecast?user_id=${userId}`, {
+        headers: this._getHeaders()
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to fetch forecast`);
       return await response.json();
     } catch (err) {
@@ -46,7 +66,9 @@ export class DashboardApiClient {
 
   async fetchAnomalies(userId = 1) {
     try {
-      const response = await fetch(`${this.baseUrl}/api/dashboard/anomalies?user_id=${userId}`);
+      const response = await fetch(`${this.baseUrl}/api/dashboard/anomalies?user_id=${userId}`, {
+        headers: this._getHeaders()
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to fetch anomalies`);
       return await response.json();
     } catch (err) {
@@ -57,7 +79,9 @@ export class DashboardApiClient {
 
   async fetchRecommendations(userId = 1) {
     try {
-      const response = await fetch(`${this.baseUrl}/api/dashboard/recommendations?user_id=${userId}`);
+      const response = await fetch(`${this.baseUrl}/api/dashboard/recommendations?user_id=${userId}`, {
+        headers: this._getHeaders()
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to fetch recommendations`);
       return await response.json();
     } catch (err) {
@@ -68,7 +92,9 @@ export class DashboardApiClient {
 
   async fetchGoals(userId = 1) {
     try {
-      const response = await fetch(`${this.baseUrl}/api/dashboard/goals?user_id=${userId}`);
+      const response = await fetch(`${this.baseUrl}/api/dashboard/goals?user_id=${userId}`, {
+        headers: this._getHeaders()
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to fetch goals`);
       return await response.json();
     } catch (err) {
@@ -81,7 +107,7 @@ export class DashboardApiClient {
     try {
       const response = await fetch(`${this.baseUrl}/api/dashboard/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this._getHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({ user_id: userId, message: message })
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to send chat message`);

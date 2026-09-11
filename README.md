@@ -2,7 +2,9 @@
 **AI + Sustainability Project | UN Sustainable Development Goal 6 (Clean Water & Sanitation)**
 
 [![SDG 6](https://img.shields.io/badge/SDG-6:_Clean_Water_%26_Sanitation-00AED9.svg)](https://sdgs.un.org/goals/goal6)
-[![Project Status: Phase 1 Active](https://img.shields.io/badge/Status-Phase_1:_Research_%26_Planning-orange.svg)](#six-phase-development-roadmap)
+[![SDG 6](https://img.shields.io/badge/SDG-6:_Clean_Water_%26_Sanitation-00AED9.svg)](https://sdgs.un.org/goals/goal6)
+[![Project Status: Phase 5 Completed](https://img.shields.io/badge/Status-Phase_5:_Integration_%26_Responsible_AI_Completed-brightgreen.svg)](#six-phase-development-roadmap)
+[![Tests: 130 Passed](https://img.shields.io/badge/Tests-130%2F130_Passing-brightgreen.svg)](6_TESTING/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
@@ -48,13 +50,13 @@ The **Smart Water Usage Advisor** is a web-based, AI-powered decision-support sy
 
 ## 🛠️ Technology Stack
 
-- **Backend / Web Framework:** Python 3.10+, Flask REST API (Modular application architecture)
-- **Database:** PostgreSQL (Authoritative 12-table relational schema)
+- **Backend / Web Framework:** Python 3.10+, Flask REST API (Modular application architecture, JWT/Bcrypt, CORS)
+- **Database:** PostgreSQL (Authoritative 12-table relational schema with SQLite in-memory fallback)
 - **Machine Learning:** `scikit-learn`, `pandas`, `numpy`, `statsmodels`
 - **AI & Natural Language Processing:** Google GenAI / LLM API with Retrieval-Augmented Generation (RAG) knowledge base
-- **Frontend:** Responsive HTML5, Vanilla CSS3 (custom sustainable design tokens), JavaScript (Fetch API & Charting)
-- **Containerization & Deployment:** Docker, Docker Compose
-- **Testing & Quality:** `pytest`, `flake8`, fairness & bias auditing test suites
+- **Frontend:** Responsive HTML5, Vanilla CSS3 (custom sustainable design tokens), JavaScript (Fetch API & Chart.js v4.4.1 offline bundle)
+- **Containerization & Deployment:** Docker, Docker Compose (Phase 6 Reserved)
+- **Testing & Quality:** `pytest`, security RBAC test suites, fairness & bias auditing test suites
 
 ---
 
@@ -62,12 +64,14 @@ The **Smart Water Usage Advisor** is a web-based, AI-powered decision-support sy
 
 | Phase | Title | Duration | Focus / Key Deliverables | Status |
 | :---: | :--- | :---: | :--- | :---: |
-| **Phase 1** | **Research & Planning** | Weeks 1–2 | Problem definition, user research, personas, system architecture, wireframes, AI planning, database design docs. | **IN PROGRESS (Current)** |
-| **Phase 2** | **Data Preparation** | Week 3 | Realistic synthetic meter telemetry generation, cleaning pipelines, feature engineering, PostgreSQL schema initialization. | Planned |
-| **Phase 3** | **AI Model Development** | Weeks 4–6 | Predictive forecasting, anomaly/leak detector, recommendation engine, chatbot prompt engineering & RAG evaluation. | Planned |
-| **Phase 4** | **Frontend & Integration** | Weeks 7–8 | Interactive dashboard UI, charts, chatbot conversation window, recommendation cards, REST API integration. | Planned |
-| **Phase 5** | **Testing & Ethics** | Weeks 9–10 | Unit & integration tests, user validation, performance load tests, responsible AI & bias mitigation audits. | Planned |
-| **Phase 6** | **Deployment & Documentation** | Weeks 11–12 | Docker containerization, cloud deployment configurations, monitoring, final presentation, impact report. | Planned |
+| **Phase 1** | **Research & Planning** | Weeks 1–2 | Problem definition, user research, personas, system architecture, wireframes, AI planning, database design docs. | **COMPLETED** |
+| **Phase 2** | **Data Preparation** | Week 3 | Realistic synthetic meter telemetry generation, cleaning pipelines, feature engineering, PostgreSQL schema initialization. | **COMPLETED** |
+| **Phase 3A**| **Predictive Forecasting** | Week 4 | Random Forest Regressor & Seasonal Naive benchmark, 7-day multi-step forecasts, anti-leakage verification. | **COMPLETED** |
+| **Phase 3B**| **Anomaly & Leak Detection**| Week 5 | 4-layer hybrid detector (Isolation Forest + domain rules), 100% leak recall, severity scoring. | **COMPLETED** |
+| **Phase 3C**| **AI Conservation Chatbot** | Week 6 | Grounded RAG conversational engine, prompt guardrails, plumber disclaimers, action center. | **COMPLETED** |
+| **Phase 4** | **Dashboard & Web UI** | Weeks 7–8 | Interactive dashboard UI, Chart.js offline bundle, persona switcher, alerts banner, chatbot drawer. | **COMPLETED** |
+| **Phase 5** | **Integration & Responsible AI** | Weeks 9–10 | Production Flask REST API, JWT/RBAC security, Responsible AI audit, model cards, 130/130 passing tests. | **COMPLETED** |
+| **Phase 6** | **Deployment & Documentation** | Weeks 11–12 | Gunicorn WSGI, Docker containerization, cloud deployment configurations, final presentation. | Planned |
 
 ---
 
@@ -117,8 +121,24 @@ Phase 1 (Research & Planning) establishes the core scientific and architectural 
    # Edit .env with local development credentials (never commit .env to git)
    ```
 
-4. **Review Phase 1 Documentation:**
-   Explore [`1_DOCUMENTATION/`](1_DOCUMENTATION/) and [`3_DESIGN/`](3_DESIGN/) to review project architecture, database schemas, and AI designs before code execution begins in Phase 2.
+4. **Run the Production-Style API Server & Dashboard:**
+   ```bash
+   python run_production_api.py --port 5000
+   ```
+   Access the dashboard at `http://127.0.0.1:5000/` and sanitized health status at `http://127.0.0.1:5000/api/health`.
+
+5. **Run the Complete Automated Test Suite (130 / 130 Passing Tests):**
+   ```bash
+   pytest 6_TESTING/ -v
+   ```
+
+6. **Run Empirical Performance Benchmarking:**
+   ```bash
+   python 6_TESTING/performance_metrics/benchmark_system.py
+   ```
+
+7. **Review Responsible AI & Model Cards:**
+   Explore [`7_ETHICS_COMPLIANCE/`](7_ETHICS_COMPLIANCE/) to review the Responsible AI Audit Report, Model Cards (Mitchell et al. format), and Dataset Datasheet (Gebru et al. format).
 
 ---
 

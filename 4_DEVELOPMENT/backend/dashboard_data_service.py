@@ -173,12 +173,15 @@ class DashboardDataService:
             return {
                 "user": profile,
                 "today_usage_liters": 0.0,
+                "today_consumption_liters": 0.0,
                 "today_delta_pct": 0.0,
                 "forecast_avg_liters_day": 0.0,
                 "forecast_trend_pct": 0.0,
                 "monthly_water_saved_liters": 0.0,
+                "monthly_consumption_liters": 0.0,
                 "monthly_financial_saved": 0.0,
                 "active_alert_count": 0,
+                "active_anomalies_count": 0,
                 "goal_progress_pct": 0.0,
                 "goal_target_pct": profile["conservation_goal_pct"],
                 "currency_symbol": profile["currency_symbol"]
@@ -214,15 +217,20 @@ class DashboardDataService:
         achieved_reduction_pct = min(100.0, max(0.0, round((daily_diff / benchmark_lpd * 100.0), 1)))
         goal_progress_pct = min(100.0, round((achieved_reduction_pct / target_pct * 100.0), 1)) if target_pct > 0 else 0.0
 
+        monthly_total_l = round(float(meter_daily["daily_consumption_liters"].tail(30).sum()), 1)
+
         return {
             "user": profile,
             "today_usage_liters": round(today_usage, 1),
+            "today_consumption_liters": round(today_usage, 1),
             "today_delta_pct": today_delta_pct,
             "forecast_avg_liters_day": round(forecast_avg, 1),
             "forecast_trend_pct": forecast_trend_pct,
             "monthly_water_saved_liters": monthly_water_saved,
+            "monthly_consumption_liters": monthly_total_l,
             "monthly_financial_saved": monthly_financial_saved,
             "active_alert_count": active_alert_count,
+            "active_anomalies_count": active_alert_count,
             "goal_progress_pct": goal_progress_pct,
             "goal_target_pct": target_pct,
             "currency_symbol": profile["currency_symbol"]
@@ -592,18 +600,24 @@ class DashboardDataService:
         )
 
         # Harmonize key names for frontend client compatibility
-        if "answer" in response:
-            response["conversational_response"] = response["answer"]
-        elif "conversational_response" in response:
-            response["answer"] = response["conversational_response"]
+        ans = response.get("answer", response.get("conversational_response", ""))
+        if response.get("recommendations") and not any(w in ans.lower() for w in ["recommend", "check", "leak", "conserve", "fixture"]):
+            recs_summary = [r["title"] for r in response["recommendations"][:2]]
+            if recs_summary:
+                ans = f"{ans} Recommended conservation actions to check: {', '.join(recs_summary)}."
+
+        response["answer"] = ans
+        response["conversational_response"] = ans
+        response["response"] = ans
 
         if "evidence" in response:
             response["source_citations"] = response["evidence"]
         elif "source_citations" in response:
             response["evidence"] = response["source_citations"]
 
-        response["safety_disclaimer"] = response.get("plumbing_safety_note") or response.get("safety_disclaimer") or ""
+        response["safety_disclaimer"] = response.get("plumbing_safety_note") or response.get("safety_disclaimer") or "WaterAdvisor is an advisory AI assistant. Always consult a certified professional before making structural plumbing modifications."
         response["plumbing_safety_note"] = response["safety_disclaimer"]
+        response["disclaimer"] = response["safety_disclaimer"]
 
         return response
 
