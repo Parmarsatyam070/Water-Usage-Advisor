@@ -1,0 +1,56 @@
+[
+  {
+    "id": "KB-001",
+    "topic": "toilet_leaks",
+    "title": "Diagnosing and Fixing Toilet Flapper Valve Leaks",
+    "category": "plumbing_troubleshooting",
+    "content": "A leaking toilet flapper is the single most common cause of high residential water bills, typically wasting between 100 to 1,000 liters per day without audible noise. To test: place 5 drops of food coloring in the toilet cistern tank and do not flush. If color appears in the bowl within 15 minutes, the rubber flapper valve is deteriorated and must be replaced. Replacement flappers cost under $10 at hardware stores and take 10 minutes to install.",
+    "savings_estimate_liters_day": 350,
+    "keywords": ["toilet", "flapper", "silent leak", "food coloring test", "night flow"]
+  },
+  {
+    "id": "KB-002",
+    "topic": "shower_efficiency",
+    "title": "Optimizing Shower Water Consumption with Aerated Heads",
+    "category": "domestic_efficiency",
+    "content": "Showers represent roughly 20% of indoor residential water consumption. Standard older showerheads deliver 9.5 to 12.0 liters per minute (LPM). EPA WaterSense certified low-flow aerated showerheads operate at 5.7 to 7.5 LPM, reducing shower water use by 30-40% without compromising water pressure sensation. Reducing shower duration by 2 minutes per person saves an additional 15 to 20 liters per session.",
+    "savings_estimate_liters_day": 80,
+    "keywords": ["shower", "aerator", "WaterSense", "bathroom", "showerhead"]
+  },
+  {
+    "id": "KB-003",
+    "topic": "irrigation_timing",
+    "title": "Evaporation Mitigation in Landscape & Garden Irrigation",
+    "category": "outdoor_conservation",
+    "content": "Watering lawns and gardens during mid-day (10:00 AM to 4:00 PM) results in up to 30-40% water loss due to solar heat and atmospheric wind evaporation. Scheduling irrigation between 4:00 AM and 7:00 AM allows water to penetrate deep into root zones before heat rises. Utilizing drip irrigation systems for shrub and garden beds reduces water volume by 50% compared to overhead sprinklers.",
+    "savings_estimate_liters_day": 200,
+    "keywords": ["irrigation", "garden", "lawn", "evaporation", "sprinkler", "drip"]
+  },
+  {
+    "id": "KB-004",
+    "topic": "night_flow_rule",
+    "title": "Minimum Night Flow Rule for Early Leak Detection",
+    "category": "leak_analytics",
+    "content": "In domestic residences, water consumption typically drops to zero for extended intervals between 1:00 AM and 5:00 AM when occupants are asleep. A persistent non-zero flow rate (greater than 5 L/hr) for two or more continuous nocturnal hours indicates continuous water escape (e.g. running toilet, cracked irrigation main line, or leaking relief valve). Flagging this condition allows repair before catastrophic drywall or foundation damage occurs.",
+    "savings_estimate_liters_day": 400,
+    "keywords": ["night flow", "continuous leak", "MNF", "zero flow", "anomaly"]
+  },
+  {
+    "id": "KB-005",
+    "topic": "faucet_aerators",
+    "title": "Faucet Aerators for Kitchen and Bathroom Sinks",
+    "category": "domestic_efficiency",
+    "content": "Standard kitchen and bathroom faucets flow at approximately 8.3 LPM. Screwing on simple multi-mesh aerators reduces flow rate to 3.8 to 5.7 LPM for bathroom sinks and 6.8 LPM for kitchen sinks. This saves approximately 20-30 liters per household per day while maintaining strong rinsing pressure.",
+    "savings_estimate_liters_day": 30,
+    "keywords": ["faucet", "aerator", "sink", "kitchen", "tap"]
+  },
+  {
+    "id": "KB-006",
+    "topic": "sdg_6_targets",
+    "title": "UN Sustainable Development Goal 6 Metrics & Targets",
+    "category": "sustainability_education",
+    "content": "UN SDG 6 aims to ensure availability and sustainable management of water and sanitation for all by 2030. Target 6.4 specifically calls on all sectors to substantially increase water-use efficiency and ensure sustainable withdrawals of freshwater. By helping households and institutions eliminate leaks and cut non-essential usage by 20-30%, digital smart water advisors directly support Target 6.4.",
+    "savings_estimate_liters_day": 0,
+    "keywords": ["SDG 6", "Clean Water", "sustainability", "United Nations", "Target 6.4"]
+  }
+]

@@ -1,0 +1,191 @@
+{
+  "meter_1": {
+    "meter_id": 1,
+    "user_id": 1,
+    "profile_name": "single_family",
+    "forecast_horizon_days": 7,
+    "daily_forecasts": [
+      {
+        "meter_id": 1,
+        "user_id": 1,
+        "date": "2026-08-30",
+        "predicted_daily_liters": 582.52,
+        "temperature_celsius": 23.79
+      },
+      {
+        "meter_id": 1,
+        "user_id": 1,
+        "date": "2026-08-31",
+        "predicted_daily_liters": 403.15,
+        "temperature_celsius": 23.93
+      },
+      {
+        "meter_id": 1,
+        "user_id": 1,
+        "date": "2026-09-01",
+        "predicted_daily_liters": 351.56,
+        "temperature_celsius": 23.81
+      },
+      {
+        "meter_id": 1,
+        "user_id": 1,
+        "date": "2026-09-02",
+        "predicted_daily_liters": 345.55,
+        "temperature_celsius": 23.63
+      },
+      {
+        "meter_id": 1,
+        "user_id": 1,
+        "date": "2026-09-03",
+        "predicted_daily_liters": 339.75,
+        "temperature_celsius": 23.23
+      },
+      {
+        "meter_id": 1,
+        "user_id": 1,
+        "date": "2026-09-04",
+        "predicted_daily_liters": 349.97,
+        "temperature_celsius": 23.42
+      },
+      {
+        "meter_id": 1,
+        "user_id": 1,
+        "date": "2026-09-05",
+        "predicted_daily_liters": 416.24,
+        "temperature_celsius": 23.42
+      }
+    ],
+    "predicted_7day_total_liters": 2788.74,
+    "predicted_monthly_liters": 11951.74,
+    "predicted_peak_day": "2026-08-30",
+    "predicted_peak_volume_liters": 582.52,
+    "model_version": "forecasting-v1.0",
+    "generated_at": "2026-09-11T09:42:17.166243+00:00"
+  },
+  "meter_2": {
+    "meter_id": 2,
+    "user_id": 2,
+    "profile_name": "multi_family",
+    "forecast_horizon_days": 7,
+    "daily_forecasts": [
+      {
+        "meter_id": 2,
+        "user_id": 2,
+        "date": "2026-08-30",
+        "predicted_daily_liters": 1255.3,
+        "temperature_celsius": 23.88
+      },
+      {
+        "meter_id": 2,
+        "user_id": 2,
+        "date": "2026-08-31",
+        "predicted_daily_liters": 835.05,
+        "temperature_celsius": 23.9
+      },
+      {
+        "meter_id": 2,
+        "user_id": 2,
+        "date": "2026-09-01",
+        "predicted_daily_liters": 784.38,
+        "temperature_celsius": 23.97
+      },
+      {
+        "meter_id": 2,
+        "user_id": 2,
+        "date": "2026-09-02",
+        "predicted_daily_liters": 883.5,
+        "temperature_celsius": 24.2
+      },
+      {
+        "meter_id": 2,
+        "user_id": 2,
+        "date": "2026-09-03",
+        "predicted_daily_liters": 904.18,
+        "temperature_celsius": 24.36
+      },
+      {
+        "meter_id": 2,
+        "user_id": 2,
+        "date": "2026-09-04",
+        "predicted_daily_liters": 898.14,
+        "temperature_celsius": 24.48
+      },
+      {
+        "meter_id": 2,
+        "user_id": 2,
+        "date": "2026-09-05",
+        "predicted_daily_liters": 1229.87,
+        "temperature_celsius": 24.4
+      }
+    ],
+    "predicted_7day_total_liters": 6790.42,
+    "predicted_monthly_liters": 29101.8,
+    "predicted_peak_day": "2026-08-30",
+    "predicted_peak_volume_liters": 1255.3,
+    "model_version": "forecasting-v1.0",
+    "generated_at": "2026-09-11T09:42:17.277097+00:00"
+  },
+  "meter_3": {
+    "meter_id": 3,
+    "user_id": 3,
+    "profile_name": "commercial",
+    "forecast_horizon_days": 7,
+    "daily_forecasts": [
+      {
+        "meter_id": 3,
+        "user_id": 3,
+        "date": "2026-08-30",
+        "predicted_daily_liters": 367.29,
+        "temperature_celsius": 23.69
+      },
+      {
+        "meter_id": 3,
+        "user_id": 3,
+        "date": "2026-08-31",
+        "predicted_daily_liters": 1997.91,
+        "temperature_celsius": 23.57
+      },
+      {
+        "meter_id": 3,
+        "user_id": 3,
+        "date": "2026-09-01",
+        "predicted_daily_liters": 1750.68,
+        "temperature_celsius": 23.6
+      },
+      {
+        "meter_id": 3,
+        "user_id": 3,
+        "date": "2026-09-02",
+        "predicted_daily_liters": 1765.91,
+        "temperature_celsius": 23.77
+      },
+      {
+        "meter_id": 3,
+        "user_id": 3,
+        "date": "2026-09-03",
+        "predicted_daily_liters": 1748.08,
+        "temperature_celsius": 23.74
+      },
+      {
+        "meter_id": 3,
+        "user_id": 3,
+        "date": "2026-09-04",
+        "predicted_daily_liters": 1748.92,
+        "temperature_celsius": 23.79
+      },
+      {
+        "meter_id": 3,
+        "user_id": 3,
+        "date": "2026-09-05",
+        "predicted_daily_liters": 374.48,
+        "temperature_celsius": 23.9
+      }
+    ],
+    "predicted_7day_total_liters": 9753.27,
+    "predicted_monthly_liters": 41799.73,
+    "predicted_peak_day": "2026-08-31",
+    "predicted_peak_volume_liters": 1997.91,
+    "model_version": "forecasting-v1.0",
+    "generated_at": "2026-09-11T09:42:17.393011+00:00"
+  }
+}

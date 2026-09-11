@@ -1,0 +1,231 @@
+ground_truth_id,meter_id,user_id,timestamp,anomaly_type,severity,observed_consumption,expected_baseline,deviation_liters,description
+1,1,1,2026-07-13T00:00:00,leak,high,17.1,1.009,16.091,Continuous toilet flapper valve leak (non-zero night flow)
+2,1,1,2026-07-13T01:00:00,leak,high,14.857,0.404,14.453,Continuous toilet flapper valve leak (non-zero night flow)
+3,1,1,2026-07-13T02:00:00,leak,high,16.521,0.202,16.319,Continuous toilet flapper valve leak (non-zero night flow)
+4,1,1,2026-07-13T03:00:00,leak,high,15.884,0.202,15.682,Continuous toilet flapper valve leak (non-zero night flow)
+5,1,1,2026-07-13T04:00:00,leak,high,15.389,0.404,14.985,Continuous toilet flapper valve leak (non-zero night flow)
+6,1,1,2026-07-13T05:00:00,leak,high,20.058,2.019,18.039,Continuous toilet flapper valve leak (non-zero night flow)
+7,1,1,2026-07-13T06:00:00,leak,high,25.441,11.104,14.337,Continuous toilet flapper valve leak (non-zero night flow)
+8,1,1,2026-07-13T07:00:00,leak,high,40.514,24.228,16.286,Continuous toilet flapper valve leak (non-zero night flow)
+9,1,1,2026-07-13T08:00:00,leak,high,45.188,29.275,15.913,Continuous toilet flapper valve leak (non-zero night flow)
+10,1,1,2026-07-13T09:00:00,leak,high,34.939,18.171,16.769,Continuous toilet flapper valve leak (non-zero night flow)
+11,1,1,2026-07-13T10:00:00,leak,high,30.906,12.114,18.792,Continuous toilet flapper valve leak (non-zero night flow)
+12,1,1,2026-07-13T11:00:00,leak,high,30.32,14.509,15.812,Continuous toilet flapper valve leak (non-zero night flow)
+13,1,1,2026-07-13T12:00:00,leak,high,33.966,16.895,17.071,Continuous toilet flapper valve leak (non-zero night flow)
+14,1,1,2026-07-13T13:00:00,leak,high,27.937,14.115,13.821,Continuous toilet flapper valve leak (non-zero night flow)
+15,1,1,2026-07-13T14:00:00,leak,high,26.464,10.799,15.665,Continuous toilet flapper valve leak (non-zero night flow)
+16,1,1,2026-07-13T15:00:00,leak,high,30.048,11.997,18.051,Continuous toilet flapper valve leak (non-zero night flow)
+17,1,1,2026-07-13T16:00:00,leak,high,31.908,16.275,15.633,Continuous toilet flapper valve leak (non-zero night flow)
+18,1,1,2026-07-13T17:00:00,leak,high,38.787,23.617,15.17,Continuous toilet flapper valve leak (non-zero night flow)
+19,1,1,2026-07-13T18:00:00,leak,high,49.687,33.228,16.459,Continuous toilet flapper valve leak (non-zero night flow)
+20,1,1,2026-07-13T19:00:00,leak,high,46.032,32.827,13.205,Continuous toilet flapper valve leak (non-zero night flow)
+21,1,1,2026-07-13T20:00:00,leak,high,43.948,26.625,17.323,Continuous toilet flapper valve leak (non-zero night flow)
+22,1,1,2026-07-13T21:00:00,leak,high,31.691,17.161,14.529,Continuous toilet flapper valve leak (non-zero night flow)
+23,1,1,2026-07-13T22:00:00,leak,high,23.668,8.076,15.592,Continuous toilet flapper valve leak (non-zero night flow)
+24,1,1,2026-07-13T23:00:00,leak,high,19.113,3.028,16.084,Continuous toilet flapper valve leak (non-zero night flow)
+25,1,1,2026-07-14T00:00:00,leak,high,16.954,1.009,15.944,Continuous toilet flapper valve leak (non-zero night flow)
+26,1,1,2026-07-14T01:00:00,leak,high,16.319,0.404,15.915,Continuous toilet flapper valve leak (non-zero night flow)
+27,1,1,2026-07-14T02:00:00,leak,high,14.633,0.202,14.432,Continuous toilet flapper valve leak (non-zero night flow)
+28,1,1,2026-07-14T03:00:00,leak,high,17.291,0.202,17.089,Continuous toilet flapper valve leak (non-zero night flow)
+29,1,1,2026-07-14T04:00:00,leak,high,16.514,0.404,16.11,Continuous toilet flapper valve leak (non-zero night flow)
+30,1,1,2026-07-14T05:00:00,leak,high,18.88,2.019,16.861,Continuous toilet flapper valve leak (non-zero night flow)
+31,1,1,2026-07-14T06:00:00,leak,high,30.36,11.104,19.255,Continuous toilet flapper valve leak (non-zero night flow)
+32,1,1,2026-07-14T07:00:00,leak,high,45.534,24.228,21.306,Continuous toilet flapper valve leak (non-zero night flow)
+33,1,1,2026-07-14T08:00:00,leak,high,40.913,29.275,11.637,Continuous toilet flapper valve leak (non-zero night flow)
+34,1,1,2026-07-14T09:00:00,leak,high,35.904,18.171,17.733,Continuous toilet flapper valve leak (non-zero night flow)
+35,1,1,2026-07-14T10:00:00,leak,high,27.344,12.114,15.23,Continuous toilet flapper valve leak (non-zero night flow)
+36,1,1,2026-07-14T11:00:00,leak,high,32.091,14.472,17.619,Continuous toilet flapper valve leak (non-zero night flow)
+37,1,1,2026-07-14T12:00:00,leak,high,33.821,16.491,17.33,Continuous toilet flapper valve leak (non-zero night flow)
+38,1,1,2026-07-14T13:00:00,leak,high,31.418,13.924,17.494,Continuous toilet flapper valve leak (non-zero night flow)
+39,1,1,2026-07-14T14:00:00,leak,high,27.106,10.834,16.272,Continuous toilet flapper valve leak (non-zero night flow)
+40,1,1,2026-07-14T15:00:00,leak,high,27.619,11.922,15.697,Continuous toilet flapper valve leak (non-zero night flow)
+41,1,1,2026-07-14T16:00:00,leak,high,31.088,16.211,14.876,Continuous toilet flapper valve leak (non-zero night flow)
+42,1,1,2026-07-14T17:00:00,leak,high,35.845,23.497,12.349,Continuous toilet flapper valve leak (non-zero night flow)
+43,1,1,2026-07-14T18:00:00,leak,high,45.42,32.771,12.649,Continuous toilet flapper valve leak (non-zero night flow)
+44,1,1,2026-07-14T19:00:00,leak,high,42.071,33.105,8.967,Continuous toilet flapper valve leak (non-zero night flow)
+45,1,1,2026-07-14T20:00:00,leak,high,39.345,26.42,12.925,Continuous toilet flapper valve leak (non-zero night flow)
+46,1,1,2026-07-14T21:00:00,leak,high,35.023,17.161,17.862,Continuous toilet flapper valve leak (non-zero night flow)
+47,1,1,2026-07-14T22:00:00,leak,high,27.693,8.076,19.617,Continuous toilet flapper valve leak (non-zero night flow)
+48,1,1,2026-07-14T23:00:00,leak,high,18.788,3.028,15.76,Continuous toilet flapper valve leak (non-zero night flow)
+49,1,1,2026-07-15T00:00:00,leak,high,18.346,1.009,17.336,Continuous toilet flapper valve leak (non-zero night flow)
+50,1,1,2026-07-15T01:00:00,leak,high,14.997,0.404,14.593,Continuous toilet flapper valve leak (non-zero night flow)
+51,1,1,2026-07-15T02:00:00,leak,high,19.34,0.202,19.138,Continuous toilet flapper valve leak (non-zero night flow)
+52,1,1,2026-07-15T03:00:00,leak,high,16.317,0.202,16.115,Continuous toilet flapper valve leak (non-zero night flow)
+53,1,1,2026-07-15T04:00:00,leak,high,16.73,0.404,16.326,Continuous toilet flapper valve leak (non-zero night flow)
+54,1,1,2026-07-15T05:00:00,leak,high,19.473,2.019,17.454,Continuous toilet flapper valve leak (non-zero night flow)
+55,1,1,2026-07-15T06:00:00,leak,high,26.224,11.104,15.119,Continuous toilet flapper valve leak (non-zero night flow)
+56,1,1,2026-07-15T07:00:00,leak,high,42.784,24.228,18.557,Continuous toilet flapper valve leak (non-zero night flow)
+57,1,1,2026-07-15T08:00:00,leak,high,51.652,29.275,22.377,Continuous toilet flapper valve leak (non-zero night flow)
+58,1,1,2026-07-15T09:00:00,leak,high,31.903,18.171,13.732,Continuous toilet flapper valve leak (non-zero night flow)
+59,1,1,2026-07-15T10:00:00,leak,high,29.554,12.114,17.44,Continuous toilet flapper valve leak (non-zero night flow)
+60,1,1,2026-07-15T11:00:00,leak,high,27.875,14.345,13.53,Continuous toilet flapper valve leak (non-zero night flow)
+61,1,1,2026-07-15T12:00:00,leak,high,35.017,16.853,18.164,Continuous toilet flapper valve leak (non-zero night flow)
+62,1,1,2026-07-15T13:00:00,leak,high,29.665,13.814,15.851,Continuous toilet flapper valve leak (non-zero night flow)
+63,1,1,2026-07-15T14:00:00,leak,high,28.316,10.779,17.537,Continuous toilet flapper valve leak (non-zero night flow)
+64,1,1,2026-07-15T15:00:00,leak,high,26.338,11.786,14.552,Continuous toilet flapper valve leak (non-zero night flow)
+65,1,1,2026-07-15T16:00:00,leak,high,31.561,16.027,15.534,Continuous toilet flapper valve leak (non-zero night flow)
+66,1,1,2026-07-15T17:00:00,leak,high,43.377,23.297,20.08,Continuous toilet flapper valve leak (non-zero night flow)
+67,1,1,2026-07-15T18:00:00,leak,high,44.97,32.602,12.368,Continuous toilet flapper valve leak (non-zero night flow)
+68,1,1,2026-07-15T19:00:00,leak,high,48.059,32.872,15.187,Continuous toilet flapper valve leak (non-zero night flow)
+69,1,1,2026-07-15T20:00:00,leak,high,43.004,26.247,16.758,Continuous toilet flapper valve leak (non-zero night flow)
+70,1,1,2026-07-15T21:00:00,leak,high,31.639,17.161,14.478,Continuous toilet flapper valve leak (non-zero night flow)
+71,1,1,2026-07-15T22:00:00,leak,high,25.526,8.076,17.451,Continuous toilet flapper valve leak (non-zero night flow)
+72,1,1,2026-07-15T23:00:00,leak,high,19.871,3.028,16.843,Continuous toilet flapper valve leak (non-zero night flow)
+73,1,1,2026-07-16T00:00:00,leak,high,17.231,1.009,16.221,Continuous toilet flapper valve leak (non-zero night flow)
+74,1,1,2026-07-16T01:00:00,leak,high,17.948,0.404,17.545,Continuous toilet flapper valve leak (non-zero night flow)
+75,1,1,2026-07-16T02:00:00,leak,high,15.536,0.202,15.334,Continuous toilet flapper valve leak (non-zero night flow)
+76,1,1,2026-07-16T03:00:00,leak,high,16.928,0.202,16.726,Continuous toilet flapper valve leak (non-zero night flow)
+77,1,1,2026-07-16T04:00:00,leak,high,16.27,0.404,15.866,Continuous toilet flapper valve leak (non-zero night flow)
+78,1,1,2026-07-16T05:00:00,leak,high,20.266,2.019,18.247,Continuous toilet flapper valve leak (non-zero night flow)
+79,1,1,2026-07-16T06:00:00,leak,high,24.869,11.104,13.765,Continuous toilet flapper valve leak (non-zero night flow)
+80,1,1,2026-07-16T07:00:00,leak,high,39.035,24.228,14.808,Continuous toilet flapper valve leak (non-zero night flow)
+81,1,1,2026-07-16T08:00:00,leak,high,42.455,29.275,13.18,Continuous toilet flapper valve leak (non-zero night flow)
+82,1,1,2026-07-16T09:00:00,leak,high,33.274,18.171,15.103,Continuous toilet flapper valve leak (non-zero night flow)
+83,1,1,2026-07-16T10:00:00,leak,high,29.892,12.114,17.779,Continuous toilet flapper valve leak (non-zero night flow)
+84,1,1,2026-07-16T11:00:00,leak,high,29.507,14.427,15.08,Continuous toilet flapper valve leak (non-zero night flow)
+85,1,1,2026-07-16T12:00:00,leak,high,31.763,16.753,15.01,Continuous toilet flapper valve leak (non-zero night flow)
+86,1,1,2026-07-16T13:00:00,leak,high,27.608,13.898,13.71,Continuous toilet flapper valve leak (non-zero night flow)
+87,1,1,2026-07-16T14:00:00,leak,high,28.151,10.749,17.402,Continuous toilet flapper valve leak (non-zero night flow)
+88,1,1,2026-07-16T15:00:00,leak,high,27.529,11.802,15.727,Continuous toilet flapper valve leak (non-zero night flow)
+89,1,1,2026-07-16T16:00:00,leak,high,34.661,16.127,18.534,Continuous toilet flapper valve leak (non-zero night flow)
+90,1,1,2026-07-16T17:00:00,leak,high,35.98,23.235,12.745,Continuous toilet flapper valve leak (non-zero night flow)
+91,1,1,2026-07-16T18:00:00,leak,high,49.778,32.396,17.383,Continuous toilet flapper valve leak (non-zero night flow)
+92,1,1,2026-07-16T19:00:00,leak,high,50.228,32.543,17.685,Continuous toilet flapper valve leak (non-zero night flow)
+93,1,1,2026-07-16T20:00:00,leak,high,42.423,26.247,16.176,Continuous toilet flapper valve leak (non-zero night flow)
+94,1,1,2026-07-16T21:00:00,leak,high,34.217,17.161,17.055,Continuous toilet flapper valve leak (non-zero night flow)
+95,1,1,2026-07-16T22:00:00,leak,high,24.769,8.076,16.693,Continuous toilet flapper valve leak (non-zero night flow)
+96,1,1,2026-07-16T23:00:00,leak,high,19.184,3.028,16.156,Continuous toilet flapper valve leak (non-zero night flow)
+97,1,1,2026-07-17T00:00:00,leak,high,18.015,1.009,17.005,Continuous toilet flapper valve leak (non-zero night flow)
+98,1,1,2026-07-17T01:00:00,leak,high,15.809,0.404,15.406,Continuous toilet flapper valve leak (non-zero night flow)
+99,1,1,2026-07-17T02:00:00,leak,high,15.92,0.202,15.718,Continuous toilet flapper valve leak (non-zero night flow)
+100,1,1,2026-07-17T03:00:00,leak,high,16.972,0.202,16.77,Continuous toilet flapper valve leak (non-zero night flow)
+101,1,1,2026-07-17T04:00:00,leak,high,17.369,0.404,16.965,Continuous toilet flapper valve leak (non-zero night flow)
+102,1,1,2026-07-17T05:00:00,leak,high,17.946,2.019,15.927,Continuous toilet flapper valve leak (non-zero night flow)
+103,1,1,2026-07-17T06:00:00,leak,high,28.398,11.104,17.294,Continuous toilet flapper valve leak (non-zero night flow)
+104,1,1,2026-07-17T07:00:00,leak,high,37.062,24.228,12.834,Continuous toilet flapper valve leak (non-zero night flow)
+105,1,1,2026-07-17T08:00:00,leak,high,48.079,29.275,18.804,Continuous toilet flapper valve leak (non-zero night flow)
+106,1,1,2026-07-17T09:00:00,leak,high,32.445,18.171,14.274,Continuous toilet flapper valve leak (non-zero night flow)
+107,1,1,2026-07-17T10:00:00,leak,high,33.106,12.114,20.992,Continuous toilet flapper valve leak (non-zero night flow)
+108,1,1,2026-07-17T11:00:00,leak,high,30.56,14.133,16.428,Continuous toilet flapper valve leak (non-zero night flow)
+109,1,1,2026-07-17T12:00:00,leak,high,32.943,16.507,16.435,Continuous toilet flapper valve leak (non-zero night flow)
+110,1,1,2026-07-17T13:00:00,leak,high,29.247,13.459,15.788,Continuous toilet flapper valve leak (non-zero night flow)
+111,1,1,2026-07-17T14:00:00,leak,high,27.644,10.569,17.074,Continuous toilet flapper valve leak (non-zero night flow)
+112,1,1,2026-07-17T15:00:00,leak,high,27.608,11.782,15.826,Continuous toilet flapper valve leak (non-zero night flow)
+113,1,1,2026-07-17T16:00:00,leak,high,33.735,16.011,17.724,Continuous toilet flapper valve leak (non-zero night flow)
+114,1,1,2026-07-17T17:00:00,leak,high,38.254,23.293,14.962,Continuous toilet flapper valve leak (non-zero night flow)
+115,1,1,2026-07-17T18:00:00,leak,high,48.106,31.807,16.299,Continuous toilet flapper valve leak (non-zero night flow)
+116,1,1,2026-07-17T19:00:00,leak,high,42.634,32.769,9.865,Continuous toilet flapper valve leak (non-zero night flow)
+117,1,1,2026-07-17T20:00:00,leak,high,45.019,26.247,18.773,Continuous toilet flapper valve leak (non-zero night flow)
+118,1,1,2026-07-17T21:00:00,leak,high,33.731,17.161,16.57,Continuous toilet flapper valve leak (non-zero night flow)
+119,1,1,2026-07-17T22:00:00,leak,high,22.195,8.076,14.119,Continuous toilet flapper valve leak (non-zero night flow)
+120,1,1,2026-07-17T23:00:00,leak,high,22.654,3.028,19.625,Continuous toilet flapper valve leak (non-zero night flow)
+121,1,1,2026-08-11T14:00:00,surge,critical,434.173,10.095,424.078,Sudden pipe burst or severed irrigation line
+122,1,1,2026-08-11T15:00:00,surge,critical,450.895,11.104,439.79,Sudden pipe burst or severed irrigation line
+123,2,2,2026-06-29T00:00:00,low,medium,1.2,2.827,-1.627,Extended uncharacteristic zero-consumption during normal active period
+124,2,2,2026-06-29T01:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+125,2,2,2026-06-29T02:00:00,low,medium,0.0,0.565,-0.565,Extended uncharacteristic zero-consumption during normal active period
+126,2,2,2026-06-29T03:00:00,low,medium,1.2,0.565,0.635,Extended uncharacteristic zero-consumption during normal active period
+127,2,2,2026-06-29T04:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+128,2,2,2026-06-29T05:00:00,low,medium,1.2,5.653,-4.453,Extended uncharacteristic zero-consumption during normal active period
+129,2,2,2026-06-29T06:00:00,low,medium,0.0,31.092,-31.092,Extended uncharacteristic zero-consumption during normal active period
+130,2,2,2026-06-29T07:00:00,low,medium,0.0,67.838,-67.838,Extended uncharacteristic zero-consumption during normal active period
+131,2,2,2026-06-29T08:00:00,low,medium,0.0,82.741,-82.741,Extended uncharacteristic zero-consumption during normal active period
+132,2,2,2026-06-29T09:00:00,low,medium,0.0,52.079,-52.079,Extended uncharacteristic zero-consumption during normal active period
+133,2,2,2026-06-29T10:00:00,low,medium,0.0,36.266,-36.266,Extended uncharacteristic zero-consumption during normal active period
+134,2,2,2026-06-29T11:00:00,low,medium,0.0,43.125,-43.125,Extended uncharacteristic zero-consumption during normal active period
+135,2,2,2026-06-29T12:00:00,low,medium,0.0,49.829,-49.829,Extended uncharacteristic zero-consumption during normal active period
+136,2,2,2026-06-29T13:00:00,low,medium,0.0,41.838,-41.838,Extended uncharacteristic zero-consumption during normal active period
+137,2,2,2026-06-29T14:00:00,low,medium,0.0,32.178,-32.178,Extended uncharacteristic zero-consumption during normal active period
+138,2,2,2026-06-29T15:00:00,low,medium,0.0,35.084,-35.084,Extended uncharacteristic zero-consumption during normal active period
+139,2,2,2026-06-29T16:00:00,low,medium,0.0,48.088,-48.088,Extended uncharacteristic zero-consumption during normal active period
+140,2,2,2026-06-29T17:00:00,low,medium,1.2,69.174,-67.974,Extended uncharacteristic zero-consumption during normal active period
+141,2,2,2026-06-29T18:00:00,low,medium,0.0,97.578,-97.578,Extended uncharacteristic zero-consumption during normal active period
+142,2,2,2026-06-29T19:00:00,low,medium,0.0,98.03,-98.03,Extended uncharacteristic zero-consumption during normal active period
+143,2,2,2026-06-29T20:00:00,low,medium,0.0,77.062,-77.062,Extended uncharacteristic zero-consumption during normal active period
+144,2,2,2026-06-29T21:00:00,low,medium,0.0,49.128,-49.128,Extended uncharacteristic zero-consumption during normal active period
+145,2,2,2026-06-29T22:00:00,low,medium,0.0,22.698,-22.698,Extended uncharacteristic zero-consumption during normal active period
+146,2,2,2026-06-29T23:00:00,low,medium,0.0,8.48,-8.48,Extended uncharacteristic zero-consumption during normal active period
+147,2,2,2026-06-30T00:00:00,low,medium,0.0,2.827,-2.827,Extended uncharacteristic zero-consumption during normal active period
+148,2,2,2026-06-30T01:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+149,2,2,2026-06-30T02:00:00,low,medium,0.0,0.565,-0.565,Extended uncharacteristic zero-consumption during normal active period
+150,2,2,2026-06-30T03:00:00,low,medium,0.0,0.565,-0.565,Extended uncharacteristic zero-consumption during normal active period
+151,2,2,2026-06-30T04:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+152,2,2,2026-06-30T05:00:00,low,medium,0.0,5.653,-5.653,Extended uncharacteristic zero-consumption during normal active period
+153,2,2,2026-06-30T06:00:00,low,medium,0.0,31.092,-31.092,Extended uncharacteristic zero-consumption during normal active period
+154,2,2,2026-06-30T07:00:00,low,medium,0.0,67.838,-67.838,Extended uncharacteristic zero-consumption during normal active period
+155,2,2,2026-06-30T08:00:00,low,medium,0.0,82.315,-82.315,Extended uncharacteristic zero-consumption during normal active period
+156,2,2,2026-06-30T09:00:00,low,medium,0.0,52.822,-52.822,Extended uncharacteristic zero-consumption during normal active period
+157,2,2,2026-06-30T10:00:00,low,medium,0.0,35.818,-35.818,Extended uncharacteristic zero-consumption during normal active period
+158,2,2,2026-06-30T11:00:00,low,medium,0.0,42.54,-42.54,Extended uncharacteristic zero-consumption during normal active period
+159,2,2,2026-06-30T12:00:00,low,medium,0.0,49.648,-49.648,Extended uncharacteristic zero-consumption during normal active period
+160,2,2,2026-06-30T13:00:00,low,medium,0.0,41.25,-41.25,Extended uncharacteristic zero-consumption during normal active period
+161,2,2,2026-06-30T14:00:00,low,medium,0.0,31.771,-31.771,Extended uncharacteristic zero-consumption during normal active period
+162,2,2,2026-06-30T15:00:00,low,medium,0.0,34.742,-34.742,Extended uncharacteristic zero-consumption during normal active period
+163,2,2,2026-06-30T16:00:00,low,medium,0.0,48.317,-48.317,Extended uncharacteristic zero-consumption during normal active period
+164,2,2,2026-06-30T17:00:00,low,medium,0.0,69.361,-69.361,Extended uncharacteristic zero-consumption during normal active period
+165,2,2,2026-06-30T18:00:00,low,medium,0.0,97.613,-97.613,Extended uncharacteristic zero-consumption during normal active period
+166,2,2,2026-06-30T19:00:00,low,medium,0.0,97.976,-97.976,Extended uncharacteristic zero-consumption during normal active period
+167,2,2,2026-06-30T20:00:00,low,medium,0.0,77.783,-77.783,Extended uncharacteristic zero-consumption during normal active period
+168,2,2,2026-06-30T21:00:00,low,medium,1.2,49.474,-48.274,Extended uncharacteristic zero-consumption during normal active period
+169,2,2,2026-06-30T22:00:00,low,medium,0.0,22.685,-22.685,Extended uncharacteristic zero-consumption during normal active period
+170,2,2,2026-06-30T23:00:00,low,medium,1.2,8.488,-7.288,Extended uncharacteristic zero-consumption during normal active period
+171,2,2,2026-07-01T00:00:00,low,medium,0.0,2.827,-2.827,Extended uncharacteristic zero-consumption during normal active period
+172,2,2,2026-07-01T01:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+173,2,2,2026-07-01T02:00:00,low,medium,0.0,0.565,-0.565,Extended uncharacteristic zero-consumption during normal active period
+174,2,2,2026-07-01T03:00:00,low,medium,0.0,0.565,-0.565,Extended uncharacteristic zero-consumption during normal active period
+175,2,2,2026-07-01T04:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+176,2,2,2026-07-01T05:00:00,low,medium,0.0,5.653,-5.653,Extended uncharacteristic zero-consumption during normal active period
+177,2,2,2026-07-01T06:00:00,low,medium,0.0,31.092,-31.092,Extended uncharacteristic zero-consumption during normal active period
+178,2,2,2026-07-01T07:00:00,low,medium,0.0,67.838,-67.838,Extended uncharacteristic zero-consumption during normal active period
+179,2,2,2026-07-01T08:00:00,low,medium,0.0,82.872,-82.872,Extended uncharacteristic zero-consumption during normal active period
+180,2,2,2026-07-01T09:00:00,low,medium,0.0,52.415,-52.415,Extended uncharacteristic zero-consumption during normal active period
+181,2,2,2026-07-01T10:00:00,low,medium,0.0,35.567,-35.567,Extended uncharacteristic zero-consumption during normal active period
+182,2,2,2026-07-01T11:00:00,low,medium,0.0,43.363,-43.363,Extended uncharacteristic zero-consumption during normal active period
+183,2,2,2026-07-01T12:00:00,low,medium,0.0,50.146,-50.146,Extended uncharacteristic zero-consumption during normal active period
+184,2,2,2026-07-01T13:00:00,low,medium,0.0,40.765,-40.765,Extended uncharacteristic zero-consumption during normal active period
+185,2,2,2026-07-01T14:00:00,low,medium,0.0,32.104,-32.104,Extended uncharacteristic zero-consumption during normal active period
+186,2,2,2026-07-01T15:00:00,low,medium,0.0,34.755,-34.755,Extended uncharacteristic zero-consumption during normal active period
+187,2,2,2026-07-01T16:00:00,low,medium,0.0,47.563,-47.563,Extended uncharacteristic zero-consumption during normal active period
+188,2,2,2026-07-01T17:00:00,low,medium,0.0,69.124,-69.124,Extended uncharacteristic zero-consumption during normal active period
+189,2,2,2026-07-01T18:00:00,low,medium,0.0,96.07,-96.07,Extended uncharacteristic zero-consumption during normal active period
+190,2,2,2026-07-01T19:00:00,low,medium,0.0,97.415,-97.415,Extended uncharacteristic zero-consumption during normal active period
+191,2,2,2026-07-01T20:00:00,low,medium,0.0,77.621,-77.621,Extended uncharacteristic zero-consumption during normal active period
+192,2,2,2026-07-01T21:00:00,low,medium,0.0,49.291,-49.291,Extended uncharacteristic zero-consumption during normal active period
+193,2,2,2026-07-01T22:00:00,low,medium,0.0,22.662,-22.662,Extended uncharacteristic zero-consumption during normal active period
+194,2,2,2026-07-01T23:00:00,low,medium,0.0,8.48,-8.48,Extended uncharacteristic zero-consumption during normal active period
+195,2,2,2026-07-02T00:00:00,low,medium,0.0,2.827,-2.827,Extended uncharacteristic zero-consumption during normal active period
+196,2,2,2026-07-02T01:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+197,2,2,2026-07-02T02:00:00,low,medium,0.0,0.565,-0.565,Extended uncharacteristic zero-consumption during normal active period
+198,2,2,2026-07-02T03:00:00,low,medium,0.0,0.565,-0.565,Extended uncharacteristic zero-consumption during normal active period
+199,2,2,2026-07-02T04:00:00,low,medium,0.0,1.131,-1.131,Extended uncharacteristic zero-consumption during normal active period
+200,2,2,2026-07-02T05:00:00,low,medium,0.0,5.653,-5.653,Extended uncharacteristic zero-consumption during normal active period
+201,2,2,2026-07-02T06:00:00,low,medium,0.0,31.092,-31.092,Extended uncharacteristic zero-consumption during normal active period
+202,2,2,2026-07-02T07:00:00,low,medium,0.0,67.838,-67.838,Extended uncharacteristic zero-consumption during normal active period
+203,2,2,2026-07-02T08:00:00,low,medium,0.0,81.97,-81.97,Extended uncharacteristic zero-consumption during normal active period
+204,2,2,2026-07-02T09:00:00,low,medium,0.0,52.232,-52.232,Extended uncharacteristic zero-consumption during normal active period
+205,2,2,2026-07-02T10:00:00,low,medium,0.0,36.246,-36.246,Extended uncharacteristic zero-consumption during normal active period
+206,2,2,2026-07-02T11:00:00,low,medium,0.0,42.192,-42.192,Extended uncharacteristic zero-consumption during normal active period
+207,2,2,2026-07-02T12:00:00,low,medium,0.0,49.919,-49.919,Extended uncharacteristic zero-consumption during normal active period
+208,2,2,2026-07-02T13:00:00,low,medium,0.0,40.611,-40.611,Extended uncharacteristic zero-consumption during normal active period
+209,2,2,2026-07-02T14:00:00,low,medium,0.0,31.533,-31.533,Extended uncharacteristic zero-consumption during normal active period
+210,2,2,2026-07-02T15:00:00,low,medium,0.0,34.562,-34.562,Extended uncharacteristic zero-consumption during normal active period
+211,2,2,2026-07-02T16:00:00,low,medium,0.0,47.724,-47.724,Extended uncharacteristic zero-consumption during normal active period
+212,2,2,2026-07-02T17:00:00,low,medium,0.0,69.572,-69.572,Extended uncharacteristic zero-consumption during normal active period
+213,2,2,2026-07-02T18:00:00,low,medium,0.0,96.07,-96.07,Extended uncharacteristic zero-consumption during normal active period
+214,2,2,2026-07-02T19:00:00,low,medium,0.0,97.252,-97.252,Extended uncharacteristic zero-consumption during normal active period
+215,2,2,2026-07-02T20:00:00,low,medium,0.0,76.269,-76.269,Extended uncharacteristic zero-consumption during normal active period
+216,2,2,2026-07-02T21:00:00,low,medium,0.0,49.685,-49.685,Extended uncharacteristic zero-consumption during normal active period
+217,2,2,2026-07-02T22:00:00,low,medium,0.0,22.712,-22.712,Extended uncharacteristic zero-consumption during normal active period
+218,2,2,2026-07-02T23:00:00,low,medium,0.0,8.48,-8.48,Extended uncharacteristic zero-consumption during normal active period
+219,3,3,2026-07-29T00:00:00,unusual_pattern,high,179.295,4.357,174.938,Commercial cooling loop cycling or unapproved nocturnal irrigation
+220,3,3,2026-07-29T01:00:00,unusual_pattern,high,194.513,4.357,190.156,Commercial cooling loop cycling or unapproved nocturnal irrigation
+221,3,3,2026-07-29T02:00:00,unusual_pattern,high,183.452,4.357,179.096,Commercial cooling loop cycling or unapproved nocturnal irrigation
+222,3,3,2026-07-29T03:00:00,unusual_pattern,high,202.387,4.357,198.03,Commercial cooling loop cycling or unapproved nocturnal irrigation
+223,3,3,2026-07-30T00:00:00,unusual_pattern,high,193.644,4.357,189.287,Commercial cooling loop cycling or unapproved nocturnal irrigation
+224,3,3,2026-07-30T01:00:00,unusual_pattern,high,197.349,4.357,192.992,Commercial cooling loop cycling or unapproved nocturnal irrigation
+225,3,3,2026-07-30T02:00:00,unusual_pattern,high,201.874,4.357,197.517,Commercial cooling loop cycling or unapproved nocturnal irrigation
+226,3,3,2026-07-30T03:00:00,unusual_pattern,high,197.944,4.357,193.587,Commercial cooling loop cycling or unapproved nocturnal irrigation
+227,3,3,2026-07-31T00:00:00,unusual_pattern,high,198.023,4.357,193.666,Commercial cooling loop cycling or unapproved nocturnal irrigation
+228,3,3,2026-07-31T01:00:00,unusual_pattern,high,187.532,4.357,183.175,Commercial cooling loop cycling or unapproved nocturnal irrigation
+229,3,3,2026-07-31T02:00:00,unusual_pattern,high,205.541,4.357,201.184,Commercial cooling loop cycling or unapproved nocturnal irrigation
+230,3,3,2026-07-31T03:00:00,unusual_pattern,high,205.313,4.357,200.956,Commercial cooling loop cycling or unapproved nocturnal irrigation

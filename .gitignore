@@ -1,0 +1,47 @@
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Database & Local Storage
+*.sqlite3
+*.db
+*.dump
+
+# Logs & Temporary Files
+*.log
+logs/
+*.tmp
+temp/
+
+# Operating System & IDE Specific
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/

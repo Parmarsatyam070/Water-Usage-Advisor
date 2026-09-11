@@ -1,0 +1,19 @@
+# Smart Water Usage Advisor - Dependencies
+# Core Database Drivers & ORM
+SQLAlchemy>=2.0.0
+psycopg2-binary>=2.9.9
+
+# Data Processing & Numerical Computing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Machine Learning & Modeling (Phase 3A)
+scikit-learn>=1.3.0
+joblib>=1.3.0
+
+# Environment & Security Configuration
+python-dotenv>=1.0.0
+bcrypt>=4.0.0
+
+# Testing & Verification
+pytest>=7.0.0

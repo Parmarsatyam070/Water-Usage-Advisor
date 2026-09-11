@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Water Usage Advisor - Real-time consumption monitoring, Phase 3A predictive forecasting, Phase 3B anomaly & leak detection, and Phase 3C conversational AI for UN SDG 6.">
+  <title>Smart Water Usage Advisor | AI Conservation Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Pinned Local Vendored Chart.js v4.4.1 (Zero External Runtime Network Dependency) -->
+  <script src="js/vendor/chart.umd.js"></script>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Global App Header -->
+    <header class="app-header" role="banner">
+      <div class="brand-section">
+        <div class="brand-logo" aria-hidden="true">💧</div>
+        <div>
+          <h1 class="brand-title">Smart Water Usage Advisor</h1>
+          <span class="sdg-badge">🌐 UN SDG 6: Clean Water & Sanitation</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Persona Switcher -->
+        <label for="persona-select" class="visually-hidden" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Select Customer Profile</label>
+        <select id="persona-select" class="persona-select" title="Switch User Profile">
+          <option value="1">Meter 1: Sarah Jenkins (Single-Family)</option>
+          <option value="2">Meter 2: Marcus Vance (Multi-Family 3-Unit)</option>
+          <option value="3">Meter 3: Elena Rostova (Commercial Complex)</option>
+        </select>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="btn-icon" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+          <span id="theme-icon">☀️</span>
+        </button>
+
+        <!-- AI Chatbot Trigger -->
+        <button id="open-chat-btn" class="btn-chat-trigger" aria-haspopup="dialog" aria-expanded="false">
+          <span>💬</span>
+          <span>Ask Water Advisor</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Phase 3B Active Anomaly Alert Banner -->
+    <div id="active-alert-banner" class="alert-banner hidden" role="alert" aria-live="assertive">
+      <div class="alert-banner-content">
+        <span class="alert-banner-icon">⚠️</span>
+        <div>
+          <strong id="alert-banner-title">Active Leak Detected:</strong>
+          <span id="alert-banner-message">Persistent night flow observed on your meter.</span>
+        </div>
+      </div>
+      <div class="alert-banner-actions">
+        <button id="btn-banner-diagnose" class="btn-banner-action">Diagnose with AI</button>
+        <button id="btn-banner-dismiss" class="btn-banner-dismiss">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- Section A: Overview KPI Summary Cards -->
+    <section id="kpi-section" class="kpi-grid" aria-label="Key Performance Indicators">
+      
+      <!-- Card 1: Today's Consumption -->
+      <article class="card kpi-card" id="kpi-today">
+        <div class="kpi-header">
+          <span class="kpi-title">Today's Usage</span>
+          <span class="kpi-icon" aria-hidden="true">📊</span>
+        </div>
+        <div class="kpi-value-row">
+          <span id="val-today-usage" class="kpi-value">--</span>
+          <span class="kpi-unit">Liters</span>
+        </div>
+        <div class="kpi-footer">
+          <span id="badge-today-trend" class="trend-badge trend-neutral">--% vs last week</span>
+        </div>
+      </article>
+
+      <!-- Card 2: 7-Day Forecast Average (Phase 3A) -->
+      <article class="card kpi-card" id="kpi-forecast">
+        <div class="kpi-header">
+          <span class="kpi-title">7-Day Forecast Avg</span>
+          <span class="kpi-icon" aria-hidden="true">🔮</span>
+        </div>
+        <div class="kpi-value-row">
+          <span id="val-forecast-avg" class="kpi-value">--</span>
+          <span class="kpi-unit">L / day</span>
+        </div>
+        <div class="kpi-footer">
+          <span id="badge-forecast-trend" class="trend-badge trend-neutral">Phase 3A ML Model</span>
+        </div>
+      </article>
+
+      <!-- Card 3: Monthly Savings (Preserved Liters & Cost) -->
+      <article class="card kpi-card" id="kpi-savings">
+        <div class="kpi-header">
+          <span class="kpi-title">Monthly Savings</span>
+          <span class="kpi-icon" aria-hidden="true">🌱</span>
+        </div>
+        <div class="kpi-value-row">
+          <span id="val-monthly-savings" class="kpi-value">--</span>
+          <span id="val-savings-currency" class="kpi-unit">Saved</span>
+        </div>
+        <div class="kpi-footer">
+          <span id="val-water-preserved" style="color: var(--accent-emerald); font-weight: 600;">-- L preserved</span>
+        </div>
+      </article>
+
+      <!-- Card 4: Conservation Goal Progress -->
+      <article class="card kpi-card" id="kpi-goal">
+        <div class="kpi-header">
+          <span class="kpi-title">Conservation Target</span>
+          <span class="kpi-icon" aria-hidden="true">🎯</span>
+        </div>
+        <div class="kpi-value-row">
+          <span id="val-goal-progress" class="kpi-value">--%</span>
+          <span class="kpi-unit">Achieved</span>
+        </div>
+        <div class="kpi-footer">
+          <span id="val-goal-target-label" class="trend-badge trend-down">Target: -25%</span>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Main Analytics & Forecast Dual Grid -->
+    <main class="analytics-grid" role="main">
+      
+      <!-- Section B: Consumption Analytics -->
+      <section class="card" id="analytics-section" aria-label="Consumption Analytics">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span>📈</span> Consumption Analytics
+          </h2>
+          <div class="chart-controls">
+            <button id="btn-diurnal-view" class="btn-chart-toggle active">24h Diurnal Curve</button>
+            <button id="btn-daily-view" class="btn-chart-toggle">30-Day History</button>
+          </div>
+        </div>
+
+        <!-- Main Time-Series Canvas -->
+        <div class="chart-container">
+          <canvas id="consumption-chart" aria-label="Water Consumption Chart" role="img"></canvas>
+        </div>
+
+        <!-- Peak Hours & Fixture Disaggregation Summary -->
+        <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.85rem; font-size: 0.825rem; color: var(--text-secondary);">
+          <div>
+            <span>🌅 Morning Peak: <strong id="val-morning-peak" style="color: var(--text-primary);">08:00</strong></span>
+            <span style="margin-left: 1rem;">🌆 Evening Peak: <strong id="val-evening-peak" style="color: var(--text-primary);">19:00</strong></span>
+          </div>
+          <div>
+            <span>Regional Benchmark: <strong id="val-benchmark" style="color: var(--accent-cyan);">440 L/d</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section C: Predictive Forecasting (Phase 3A) -->
+      <section class="card" id="forecast-section" aria-label="Predictive Consumption Forecasting">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span>🔮</span> 7-Day Demand Forecast
+          </h2>
+          <span class="sdg-badge" id="badge-forecast-model">Random Forest (Phase 3A)</span>
+        </div>
+
+        <!-- 7-Day Forecast Canvas -->
+        <div class="chart-container">
+          <canvas id="forecast-chart" aria-label="7-Day Predictive Demand Forecast" role="img"></canvas>
+        </div>
+
+        <!-- Peak Demand Callout & Responsible AI Attribution -->
+        <div class="ai-attribution-card">
+          <span style="font-size: 1.1rem;">ℹ️</span>
+          <div>
+            <div><strong>Forecast Peak Day:</strong> <span id="val-peak-day-label" style="color: var(--accent-amber); font-weight: 700;">--</span></div>
+            <div style="font-size: 0.725rem; color: var(--text-muted); margin-top: 0.2rem;">
+              Model Projection: Predicted values represent statistical expectations based on seasonal patterns. Predictions are subject to actual weather and occupant behavior.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Lower Grid: Anomalies & Action Center -->
+    <div class="lower-grid">
+
+      <!-- Section D: Anomaly & Leak Incident Center (Phase 3B) -->
+      <section class="card" id="anomalies-section" aria-label="Anomaly and Leak Incidents">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span>🚨</span> Anomaly & Leak Incident Log
+          </h2>
+          <span id="badge-active-incidents" class="severity-pill severity-low">0 Active Alerts</span>
+        </div>
+
+        <div id="anomaly-list" class="anomaly-list" role="feed" aria-busy="false">
+          <!-- Populated dynamically by alerts.js -->
+        </div>
+      </section>
+
+      <!-- Section E: Personalized Conservation Action Center (Phase 3C) -->
+      <section class="card" id="recommendations-section" aria-label="Personalized Recommendations">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span>💡</span> Conservation Action Center
+          </h2>
+          <span id="val-total-potential" class="savings-chip">Potential: -- L/day</span>
+        </div>
+
+        <div id="recommendations-list" class="recommendation-list" role="feed">
+          <!-- Populated dynamically by recommendations.js -->
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Section G: Conservation Goal & SDG 6 Progress -->
+    <section class="card" id="goals-section" aria-label="Conservation Goal Tracker">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span>🎯</span> SDG 6.4 Conservation Target Progress
+        </h2>
+        <span id="val-days-remaining" style="font-size: 0.8rem; color: var(--text-secondary);">18 Days Left in Cycle</span>
+      </div>
+
+      <div class="goal-progress-wrap">
+        <div style="display: flex; justify-content: space-between; font-size: 0.825rem;">
+          <span>Current: <strong id="val-goal-current">-- L/d</strong></span>
+          <span>Target Trajectory: <strong id="val-goal-target-vol" style="color: var(--accent-emerald);">-- L/d</strong></span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="goal-progress-bar" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Section F: AI Water Conservation Chatbot Drawer (Phase 3C) -->
+  <div id="chat-drawer-backdrop" class="chat-drawer-backdrop" aria-hidden="true">
+    <aside class="chat-drawer" role="dialog" aria-label="AI Water Conservation Advisor" aria-modal="true">
+      
+      <!-- Drawer Header -->
+      <div class="chat-header">
+        <div class="chat-header-title">
+          <span>💧</span>
+          <span>AI Water Conservation Advisor</span>
+        </div>
+        <button id="btn-close-chat" class="btn-close-chat" title="Close Advisor" aria-label="Close Advisor">×</button>
+      </div>
+
+      <!-- Context Grounding Pill -->
+      <div class="chat-context-pill">
+        <span>ℹ️</span>
+        <span id="chat-context-text">Grounded in Meter #1 Telemetry & Phase 3 Models</span>
+      </div>
+
+      <!-- Message History Stream -->
+      <div id="chat-messages" class="chat-messages" role="log" aria-live="polite">
+        <!-- Initial Welcome Bubble -->
+        <div class="chat-bubble bot">
+          Hello! I am your <strong>Smart Water Usage Advisor</strong>. I have analyzed your meter's recent consumption, forward forecast, and active leak checks. How can I help you save water today?
+        </div>
+      </div>
+
+      <!-- Quick Prompt Suggestions -->
+      <div class="chat-quick-prompts" role="toolbar" aria-label="Suggested Prompts">
+        <button class="prompt-pill" data-prompt="Why is my water bill higher this month?">Why is my bill high?</button>
+        <button class="prompt-pill" data-prompt="How do I test my toilet for silent leaks?">Test toilet leaks</button>
+        <button class="prompt-pill" data-prompt="What are the best tips to reduce garden water?">Garden tips</button>
+        <button class="prompt-pill" data-prompt="Explain my 7-day demand forecast">Explain forecast</button>
+      </div>
+
+      <!-- Input Area -->
+      <form id="chat-form" class="chat-input-area">
+        <input type="text" id="chat-input" class="chat-input" placeholder="Ask a question about your water usage..." autocomplete="off" required>
+        <button type="submit" id="btn-send-chat" class="btn-send-chat" title="Send Question" aria-label="Send Question">➤</button>
+      </form>
+
+    </aside>
+  </div>
+
+  <!-- JavaScript Modular Application Bundle -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

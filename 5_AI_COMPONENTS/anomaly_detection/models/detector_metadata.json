@@ -1,0 +1,7 @@
+{
+  "calibration_samples": 4392,
+  "calibration_start": "2026-06-01 00:00:00",
+  "calibration_end": "2026-07-31 23:00:00",
+  "isolation_contamination": 0.035,
+  "z_threshold": 3.5
+}

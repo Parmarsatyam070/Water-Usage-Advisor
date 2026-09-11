@@ -1,0 +1,206 @@
+{
+  "algorithm": "random_forest",
+  "model_version": "forecasting-v1.0",
+  "training_samples": 186,
+  "training_duration_sec": 0.1836,
+  "trained_at": "2026-09-11T09:42:16.351538+00:00",
+  "hyperparameters": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": 6,
+    "max_features": 1.0,
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 2,
+    "min_samples_split": 4,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 100,
+    "n_jobs": null,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "overall_test_metrics": {
+    "MAE": 96.158,
+    "RMSE": 160.288,
+    "MAPE": 21.66,
+    "R2": 0.9153,
+    "accuracy_proxy": 78.34,
+    "training_time_sec": 0.1836,
+    "inference_time_sec": 0.0155
+  },
+  "per_profile_metrics": {
+    "Residential Single-Family (Meter 1)": {
+      "MAE": 183.798,
+      "RMSE": 259.023,
+      "MAPE": 55.88,
+      "R2": -26.79,
+      "accuracy_proxy": 44.12
+    },
+    "Residential Multi-Family (Meter 2)": {
+      "MAE": 27.48,
+      "RMSE": 34.646,
+      "MAPE": 2.9,
+      "R2": 0.9392,
+      "accuracy_proxy": 97.1
+    },
+    "Commercial Facility (Meter 3)": {
+      "MAE": 77.196,
+      "RMSE": 93.72,
+      "MAPE": 6.21,
+      "R2": 0.9776,
+      "accuracy_proxy": 93.79
+    }
+  },
+  "baseline_metrics": {
+    "naive_previous_day": {
+      "MAE": 189.338,
+      "RMSE": 417.497,
+      "MAPE": 30.83,
+      "R2": 0.4256,
+      "accuracy_proxy": 69.17
+    },
+    "seasonal_naive_7d": {
+      "MAE": 56.188,
+      "RMSE": 140.105,
+      "MAPE": 9.85,
+      "R2": 0.9353,
+      "accuracy_proxy": 90.15
+    }
+  },
+  "comparison_table": [
+    {
+      "model_name": "Seasonal Naive 7-day",
+      "MAE": 56.188,
+      "RMSE": 140.105,
+      "MAPE": 9.85,
+      "R2": 0.9353,
+      "accuracy_proxy": 90.15,
+      "beats_seasonal_naive": "Benchmark",
+      "target_achieved": true
+    },
+    {
+      "model_name": "Naive Previous-Day (t-1)",
+      "MAE": 189.338,
+      "RMSE": 417.497,
+      "MAPE": 30.83,
+      "R2": 0.4256,
+      "accuracy_proxy": 69.17,
+      "beats_seasonal_naive": "NO",
+      "target_achieved": false
+    },
+    {
+      "model_name": "Per-Meter Local Random Forest",
+      "MAE": 80.554,
+      "RMSE": 129.494,
+      "MAPE": 15.7,
+      "R2": 0.9447,
+      "accuracy_proxy": 84.3,
+      "beats_seasonal_naive": "NO",
+      "target_achieved": false
+    },
+    {
+      "model_name": "Ridge Regression (alpha=10)",
+      "MAE": 95.585,
+      "RMSE": 134.28,
+      "MAPE": 18.25,
+      "R2": 0.9406,
+      "accuracy_proxy": 81.75,
+      "beats_seasonal_naive": "NO",
+      "target_achieved": false
+    },
+    {
+      "model_name": "Global Random Forest (Primary ML)",
+      "MAE": 96.158,
+      "RMSE": 160.288,
+      "MAPE": 21.66,
+      "R2": 0.9153,
+      "accuracy_proxy": 78.34,
+      "beats_seasonal_naive": "NO",
+      "target_achieved": false
+    },
+    {
+      "model_name": "Global Gradient Boosting (tuned)",
+      "MAE": 113.036,
+      "RMSE": 202.013,
+      "MAPE": 27.05,
+      "R2": 0.8655,
+      "accuracy_proxy": 72.95,
+      "beats_seasonal_naive": "NO",
+      "target_achieved": false
+    }
+  ],
+  "beats_seasonal_naive": false,
+  "official_benchmark": "Seasonal Naive 7-day",
+  "benchmark_mape": 9.85,
+  "target_mape_threshold": 15.0,
+  "target_achieved_benchmark": true,
+  "target_achieved_ml_model": false,
+  "feature_importances": {
+    "lag_7d": 0.4257,
+    "lag_14d": 0.3681,
+    "rolling_min_7d": 0.0581,
+    "profile_multi_family": 0.0476,
+    "rolling_max_7d": 0.0161,
+    "day_of_week": 0.0156,
+    "day_of_month": 0.0131,
+    "lag_1d": 0.0123,
+    "rolling_mean_7d": 0.0072,
+    "rolling_mean_14d": 0.007,
+    "rolling_std_7d": 0.0064,
+    "lag_2d": 0.0051,
+    "is_weekend": 0.0048,
+    "temperature_celsius": 0.0043,
+    "profile_commercial": 0.0037,
+    "dow_sin": 0.0028,
+    "lag_3d": 0.0014,
+    "dow_cos": 0.0003,
+    "month": 0.0001,
+    "month_sin": 0.0001,
+    "profile_single_family": 0.0001,
+    "month_cos": 0.0
+  },
+  "top_errors": [
+    {
+      "date": "2026-08-25",
+      "meter_id": 1,
+      "profile": "single_family",
+      "actual": 318.62,
+      "predicted": 963.49,
+      "abs_error": 644.87,
+      "pct_error": 202.39
+    },
+    {
+      "date": "2026-08-18",
+      "meter_id": 1,
+      "profile": "single_family",
+      "actual": 329.3,
+      "predicted": 903.15,
+      "abs_error": 573.85,
+      "pct_error": 174.26
+    },
+    {
+      "date": "2026-08-28",
+      "meter_id": 3,
+      "profile": "commercial",
+      "actual": 1684.19,
+      "predicted": 1897.97,
+      "abs_error": 213.78,
+      "pct_error": 12.69
+    },
+    {
+      "date": "2026-08-26",
+      "meter_id": 1,
+      "profile": "single_family",
+      "actual": 325.2,
+      "predicted": 521.01,
+      "abs_error": 195.81,
+      "pct_error": 60.21
+    }
+  ],
+  "synthetic_data_disclaimer": "Evaluation was performed on synthetic Phase 2 telemetry."
+}

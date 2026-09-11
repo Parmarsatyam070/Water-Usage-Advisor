@@ -1,0 +1,57 @@
+# ==============================================================================
+# SMART WATER USAGE ADVISOR - DYNAMIC PROMPT TEMPLATES (RAG)
+# ==============================================================================
+# Variables enclosed in {{VARIABLE_NAME}} are injected dynamically at runtime
+# from the database and user profile context before inference.
+# ==============================================================================
+
+[PROMPT_TEMPLATE_RAG_CONVERSATION]
+[SYSTEM INSTRUCTION]
+{SYSTEM_PROMPT_CORE}
+
+[USER CONTEXT]
+- User ID: {{USER_ID}}
+- Role: {{USER_ROLE}}
+- Household Size: {{HOUSEHOLD_SIZE}} occupants
+- Property Type: {{PROPERTY_TYPE}}
+- Active Conservation Goal: {{CONSERVATION_GOAL_PERCENT}}% reduction
+- Meter Serial: {{METER_SERIAL}}
+- Today's Usage so far: {{TODAYS_CONSUMPTION_LITERS}} Liters (Baseline: {{BASELINE_LITERS}} L)
+- 7-Day Average Daily Usage: {{WEEKLY_AVG_LITERS}} Liters
+- 7-Day Forward Forecast: {{FORECAST_DAILY_AVG_LITERS}} Liters
+- Active Anomaly Alerts: {{ACTIVE_ALERTS_JSON}}
+
+[RETRIEVED KNOWLEDGE BASE SNIPPETS]
+{{RETRIEVED_DOCUMENTS}}
+
+[CONVERSATION HISTORY]
+{{CONVERSATION_HISTORY}}
+
+[USER QUERY]
+{{USER_MESSAGE}}
+
+[ASSISTANT RESPONSE]
+
+--------------------------------------------------------------------------------
+
+[PROMPT_TEMPLATE_RECOMMENDATION_GENERATION]
+You are generating a tailored water conservation recommendation for:
+User Profile: {{HOUSEHOLD_SIZE}} persons, {{PROPERTY_TYPE}}, Garden Area: {{GARDEN_AREA_SQM}} sqm.
+Observed High Usage Category: {{PRIMARY_CONSUMPTION_CATEGORY}}
+Observed Anomaly: {{ANOMALY_SUMMARY}}
+
+Generate a concise recommendation containing:
+1. Title (under 8 words)
+2. Description & Justification (2-3 sentences)
+3. Estimated Daily Savings in Liters
+4. Estimated Monthly Savings in Dollars (assuming $0.0035/L)
+5. Priority (low, medium, high, urgent)
+
+Format output strictly as JSON:
+{
+  "title": "...",
+  "description": "...",
+  "estimated_savings_liters": 0.0,
+  "estimated_savings_cost": 0.0,
+  "priority": "..."
+}
