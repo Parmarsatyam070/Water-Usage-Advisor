@@ -1,0 +1,4 @@
+# Deployment dependencies for Smart Water Usage Advisor
+# Extends base development requirements with production WSGI server for Linux containers
+-r ../requirements.txt
+gunicorn>=21.2.0
