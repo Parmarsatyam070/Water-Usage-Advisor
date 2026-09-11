@@ -45,3 +45,6 @@ desktop.ini
 
 # Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
+
+# Scratch & Local Experimentation Artifacts
+scratch/
