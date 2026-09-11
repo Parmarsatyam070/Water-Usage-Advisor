@@ -172,6 +172,35 @@ def meter_access_required(f: Callable) -> Callable:
     return decorated_function
 
 
+def roles_required(*allowed_roles: str) -> Callable:
+    """
+    Role-Based Access Control (RBAC) Decorator.
+    Verifies that authenticated user has one of the allowed roles (e.g. 'municipal').
+    Returns 403 Forbidden for unauthorized roles.
+    """
+    def decorator(f: Callable) -> Callable:
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not hasattr(g, "current_user") or not g.current_user:
+                return jsonify({
+                    "error": "Authentication required.",
+                    "error_code": "UNAUTHORIZED",
+                    "status_code": 401
+                }), 401
+
+            user_type = g.current_user.get("user_type", "household")
+            if user_type not in allowed_roles:
+                return jsonify({
+                    "error": f"Access denied: Role '{user_type}' is not authorized for this resource.",
+                    "error_code": "FORBIDDEN",
+                    "status_code": 403
+                }), 403
+
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
+
 def register_error_handlers(app):
     """Registers standard JSON error handlers across the Flask application."""
 

@@ -105,6 +105,18 @@ The audit confirms that the system operates strictly as an **advisory decision-s
 
 ---
 
+### Pillar 9: Advanced Water Intelligence & Impact Guardrails (Phase 7)
+* **Risk Audited:** Simulation tools, sustainability scoring, or SDG alignment metrics misleading users into expecting guaranteed utility billing reductions or assuming official UN/government certification.
+* **Audit Finding:**
+  - **Volumetric & Financial Simulations Labeled as Estimates:** All projections produced by `WaterSavingsService` and `ScenarioAnalysisService` attach mandatory disclaimers declaring results as analytical decision-support estimates based on user assumptions, with zero claims of guaranteed bill reductions.
+  - **Avoided Leak Volume Terminology:** Metric reporting for resolved incidents strictly uses *"Estimated avoided leak volume after resolution"* (or *"Estimated avoided water"*), strictly avoiding misleading claims like *"measured savings," "guaranteed savings," "recovered water,"* or *"scientifically verified savings."*
+  - **UN SDG 6.4 Non-Certification Disclosure:** All SDG impact displays and API payloads prominently include the notice: *"The SDG 6.4 dashboard represents project impact alignment and measurement; it does not constitute official UN SDG certification or compliance."*
+  - **Documented Benchmark Provenance:** Regional benchmarks are explicitly grounded in the project-configured baseline assumptions (`USER_PROFILES` in `dashboard_data_service.py`), transparently labeled as synthetic reference allowances rather than regional government mandates.
+  - **WHO Sanitary Safety Floor Enforcement:** Goal recommendations automatically enforce a sanitary consumption floor of at least 50 L/capita/day (per World Health Organization guidelines), preventing algorithmic recommendations of unsafe hygiene restrictions.
+  - **Synthetic Telemetry Disclosures:** All data export artifacts (RFC 4180 CSV exports and printable executive audit reports) carry conspicuous disclosures stating that data includes synthetic smart meter telemetry generated for sustainable water management research and demonstration.
+
+---
+
 ## 3. Audit Conclusion & Compliance Certification
 
 The Smart Water Usage Advisor complies with the ethical guidelines of **ISO/IEC 42001** and the **OECD AI Principles**. The system exhibits robust safeguards against privacy invasion, demographic bias, and unauthorized data access while providing actionable, grounded, and compassionate water conservation advice.

@@ -44,6 +44,18 @@
       </div>
     </header>
 
+    <!-- Phase 7 Advanced Water Intelligence Feature Navigation -->
+    <nav class="subnav-bar" role="navigation" aria-label="Feature Navigation">
+      <button class="subnav-btn active" data-tab="overview">📊 Overview</button>
+      <button class="subnav-btn" data-tab="simulator">💧 Simulator & Scenarios</button>
+      <button class="subnav-btn" data-tab="sustainability">🌿 Sustainability & SDG 6.4</button>
+      <button class="subnav-btn" data-tab="goals-budget">🎯 Goals & Budget</button>
+      <button class="subnav-btn" data-tab="insights">🔍 Insights</button>
+      <button class="subnav-btn" data-tab="alerts">🚨 Alerts Manager</button>
+      <button class="subnav-btn" data-tab="reports">📄 Reports</button>
+      <button class="subnav-btn" data-tab="admin">⚙️ Admin</button>
+    </nav>
+
     <!-- Phase 3B Active Anomaly Alert Banner -->
     <div id="active-alert-banner" class="alert-banner hidden" role="alert" aria-live="assertive">
       <div class="alert-banner-content">
@@ -59,8 +71,10 @@
       </div>
     </div>
 
-    <!-- Section A: Overview KPI Summary Cards -->
-    <section id="kpi-section" class="kpi-grid" aria-label="Key Performance Indicators">
+    <!-- Tab Pane 1: Overview -->
+    <div id="tab-overview" class="tab-pane active">
+      <!-- Section A: Overview KPI Summary Cards -->
+      <section id="kpi-section" class="kpi-grid" aria-label="Key Performance Indicators">
       
       <!-- Card 1: Today's Consumption -->
       <article class="card kpi-card" id="kpi-today">
@@ -236,6 +250,42 @@
         </div>
       </div>
     </section>
+    </div><!-- End of Tab Pane 1: Overview -->
+
+    <!-- Tab Pane 2: Simulator & Scenarios -->
+    <div id="tab-simulator" class="tab-pane">
+      <div id="simulator-container"></div>
+    </div>
+
+    <!-- Tab Pane 3: Sustainability Score & SDG 6.4 Impact -->
+    <div id="tab-sustainability" class="tab-pane">
+      <div id="sustainability-container"></div>
+    </div>
+
+    <!-- Tab Pane 4: Smart Goals & Water Budget -->
+    <div id="tab-goals-budget" class="tab-pane">
+      <div id="goals-budget-container"></div>
+    </div>
+
+    <!-- Tab Pane 5: Trend & Pattern Insights -->
+    <div id="tab-insights" class="tab-pane">
+      <div id="insights-container"></div>
+    </div>
+
+    <!-- Tab Pane 6: Alert History & Resolution Lifecycle -->
+    <div id="tab-alerts" class="tab-pane">
+      <div id="alerts-manager-container"></div>
+    </div>
+
+    <!-- Tab Pane 7: Reports & Data Exports -->
+    <div id="tab-reports" class="tab-pane">
+      <div id="reports-container"></div>
+    </div>
+
+    <!-- Tab Pane 8: Admin & System Monitoring (Municipal Only) -->
+    <div id="tab-admin" class="tab-pane">
+      <div id="admin-container"></div>
+    </div>
 
   </div>
 

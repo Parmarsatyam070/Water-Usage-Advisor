@@ -26,7 +26,7 @@ if DEV_DIR not in sys.path:
 from backend.config import get_config, BaseConfig
 from backend.api.middleware import register_error_handlers
 
-# Import all 7 modular Blueprints
+# Import upstream Phase 5/6 Blueprints
 from backend.api.routes_auth import auth_bp
 from backend.api.routes_dashboard import dashboard_bp
 from backend.api.routes_telemetry import telemetry_bp
@@ -34,6 +34,14 @@ from backend.api.routes_forecasting import forecasting_bp
 from backend.api.routes_anomalies import anomalies_bp
 from backend.api.routes_chat import chat_bp
 from backend.api.routes_health import health_bp
+
+# Import Phase 7 Advanced Water Intelligence Blueprints
+from backend.api.routes_water_intelligence import water_bp
+from backend.api.routes_alerts_history import alerts_history_bp
+from backend.api.routes_sdg6 import sdg6_bp
+from backend.api.routes_goals_adv import goals_adv_bp
+from backend.api.routes_reports import reports_bp
+from backend.api.routes_admin import admin_bp
 
 
 def create_app(config=None) -> Flask:
@@ -62,7 +70,7 @@ def create_app(config=None) -> Flask:
     # Register centralized error handlers
     register_error_handlers(app)
 
-    # Register all 7 modular Blueprints
+    # Register upstream Phase 5/6 Blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(telemetry_bp)
@@ -70,6 +78,14 @@ def create_app(config=None) -> Flask:
     app.register_blueprint(anomalies_bp)
     app.register_blueprint(chat_bp)
     app.register_blueprint(health_bp)
+
+    # Register Phase 7 Blueprints
+    app.register_blueprint(water_bp)
+    app.register_blueprint(alerts_history_bp)
+    app.register_blueprint(sdg6_bp)
+    app.register_blueprint(goals_adv_bp)
+    app.register_blueprint(reports_bp)
+    app.register_blueprint(admin_bp)
 
     # Static Frontend Asset Serving at http://127.0.0.1:5000/
     @app.route("/", methods=["GET"])
