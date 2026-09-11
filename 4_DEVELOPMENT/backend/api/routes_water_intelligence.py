@@ -118,7 +118,7 @@ def get_scenario_history():
     """
     Feature 2: Retrieve previously saved scenario history for the authenticated user.
     """
-    user_id = g.current_user["user_id"]
+    user_id = int(request.args.get("user_id", g.current_user["user_id"]))
     limit = int(request.args.get("limit", 10))
     history = _scenario_service.get_scenario_history(user_id=user_id, limit=limit)
     return jsonify({"user_id": user_id, "count": len(history), "scenarios": history}), 200
@@ -131,7 +131,7 @@ def get_sustainability_score():
     """
     Feature 3: 0-100 Water Usage Sustainability Score.
     """
-    user_id = g.current_user["user_id"]
+    user_id = int(request.args.get("user_id", g.current_user["user_id"]))
     res = _score_service.calculate_score(user_id=user_id)
     return jsonify(res), 200
 
@@ -143,7 +143,7 @@ def get_insights():
     """
     Feature 7: Trend & Pattern Statistical Insights.
     """
-    user_id = g.current_user["user_id"]
+    user_id = int(request.args.get("user_id", g.current_user["user_id"]))
     res = _insights_service.get_insights(user_id=user_id)
     return jsonify(res), 200
 
@@ -155,7 +155,7 @@ def get_budget():
     """
     Feature 8: Active Water Budget status and overshoot warning.
     """
-    user_id = g.current_user["user_id"]
+    user_id = int(request.args.get("user_id", g.current_user["user_id"]))
     res = _budget_service.get_active_budget(user_id=user_id)
     return jsonify(res), 200
 
@@ -167,8 +167,8 @@ def set_budget():
     """
     Feature 8: Create or update active Water Budget.
     """
-    user_id = g.current_user["user_id"]
     body = request.get_json(silent=True) or {}
+    user_id = int(body.get("user_id", g.current_user["user_id"]))
 
     period = body.get("period", "monthly")
     target_liters = body.get("target_liters")

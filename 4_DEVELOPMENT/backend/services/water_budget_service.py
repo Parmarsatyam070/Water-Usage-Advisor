@@ -24,6 +24,7 @@ class WaterBudgetService:
     def __init__(self, db_engine=None, data_service=None):
         self._db_engine = db_engine
         self.data_service = data_service or get_data_service()
+        self._in_memory_budgets = {}
 
     def _get_engine(self):
         if self._db_engine is None:
@@ -69,6 +70,18 @@ class WaterBudgetService:
             cost_budget = float(budget_row[3]) if budget_row[3] is not None else round((target_liters / 1000.0) * cost_per_kl, 2)
             start_date = budget_row[4]
             end_date = budget_row[5]
+            if isinstance(start_date, str):
+                start_date = date.fromisoformat(start_date)
+            if isinstance(end_date, str):
+                end_date = date.fromisoformat(end_date)
+        elif user_id in self._in_memory_budgets:
+            mem_b = self._in_memory_budgets[user_id]
+            budget_id = mem_b.get("budget_id", 1)
+            period = mem_b.get("period", "monthly")
+            target_liters = float(mem_b.get("target_liters", 12000.0))
+            cost_budget = float(mem_b.get("cost_budget") or round((target_liters / 1000.0) * cost_per_kl, 2))
+            start_date = mem_b.get("start_date", today - timedelta(days=12))
+            end_date = mem_b.get("end_date", start_date + timedelta(days=30))
             if isinstance(start_date, str):
                 start_date = date.fromisoformat(start_date)
             if isinstance(end_date, str):
@@ -180,25 +193,56 @@ class WaterBudgetService:
                         WHERE user_id = :u_id AND is_active = TRUE
                     """), {"u_id": user_id})
 
-                    res = conn.execute(text("""
-                        INSERT INTO water_budgets (
-                            user_id, period, target_liters, cost_budget,
-                            start_date, end_date, is_active
-                        ) VALUES (
-                            :u_id, :prd, :t_liters, :c_bgt, :s_date, :e_date, TRUE
-                        )
-                    """), {
-                        "u_id": user_id,
-                        "prd": norm_period,
-                        "t_liters": target_liters,
-                        "c_bgt": cost_budget,
-                        "s_date": today,
-                        "e_date": end_date
-                    })
-                    if hasattr(res, "lastrowid") and res.lastrowid:
-                        budget_id = res.lastrowid
+                    if eng.dialect.name == "postgresql":
+                        res = conn.execute(text("""
+                            INSERT INTO water_budgets (
+                                user_id, period, target_liters, cost_budget,
+                                start_date, end_date, is_active
+                            ) VALUES (
+                                :u_id, :prd, :t_liters, :c_bgt, :s_date, :e_date, TRUE
+                            ) RETURNING budget_id
+                        """), {
+                            "u_id": user_id,
+                            "prd": norm_period,
+                            "t_liters": target_liters,
+                            "c_bgt": cost_budget,
+                            "s_date": today,
+                            "e_date": end_date
+                        })
+                        row = res.fetchone()
+                        budget_id = row[0] if row else 1
+                    else:
+                        res = conn.execute(text("""
+                            INSERT INTO water_budgets (
+                                user_id, period, target_liters, cost_budget,
+                                start_date, end_date, is_active
+                            ) VALUES (
+                                :u_id, :prd, :t_liters, :c_bgt, :s_date, :e_date, TRUE
+                            )
+                        """), {
+                            "u_id": user_id,
+                            "prd": norm_period,
+                            "t_liters": target_liters,
+                            "c_bgt": cost_budget,
+                            "s_date": today,
+                            "e_date": end_date
+                        })
+                        if hasattr(res, "lastrowid") and res.lastrowid:
+                            budget_id = res.lastrowid
+                        else:
+                            budget_id = 1
             except Exception:
                 budget_id = 1
+
+        self._in_memory_budgets[user_id] = {
+            "budget_id": budget_id or 1,
+            "period": norm_period,
+            "target_liters": target_liters,
+            "cost_budget": cost_budget,
+            "start_date": today,
+            "end_date": end_date,
+            "is_active": True
+        }
 
         return {
             "budget_id": budget_id,

@@ -28,6 +28,7 @@ class GoalRecommendationService:
     def __init__(self, db_engine=None, data_service=None):
         self._db_engine = db_engine
         self.data_service = data_service or get_data_service()
+        self._in_memory_goals = {}
 
     def _get_engine(self):
         if self._db_engine is None:
@@ -139,7 +140,10 @@ class GoalRecommendationService:
         """
         Adopts a recommended goal and writes it to the `goals` table.
         """
-        valid_types = ["daily_limit", "weekly_target", "savings_amount", "percentage_reduction"]
+        valid_types = [
+            "daily_limit", "weekly_target", "savings_amount", "percentage_reduction",
+            "shower_aerator", "shower_reduction", "smart_irrigation", "leak_repair", "custom"
+        ]
         if goal_type not in valid_types:
             raise ValueError(f"Invalid goal_type '{goal_type}'. Allowed: {', '.join(valid_types)}")
 
@@ -158,34 +162,67 @@ class GoalRecommendationService:
                     # Deactivate previous active goals of this type
                     conn.execute(text("""
                         UPDATE goals
-                        SET is_active = FALSE, updated_timestamp = CURRENT_TIMESTAMP
-                        WHERE user_id = :u_id AND is_active = TRUE
+                        SET status = 'cancelled', updated_at = CURRENT_TIMESTAMP
+                        WHERE user_id = :u_id AND status = 'active'
                     """), {"u_id": user_id})
 
                     # Insert new active goal
-                    res = conn.execute(text("""
-                        INSERT INTO goals (
-                            user_id, goal_type, target_value, target_unit,
-                            start_date, end_date, is_active
-                        ) VALUES (
-                            :u_id, :g_type, :val, :unit, :s_date, :e_date, TRUE
-                        )
-                    """), {
-                        "u_id": user_id,
-                        "g_type": goal_type,
-                        "val": target_value,
-                        "unit": target_unit,
-                        "s_date": today,
-                        "e_date": end_date
-                    })
-                    if hasattr(res, "lastrowid") and res.lastrowid:
-                        goal_id = res.lastrowid
+                    if eng.dialect.name == "postgresql":
+                        res = conn.execute(text("""
+                            INSERT INTO goals (
+                                user_id, goal_type, target_value, target_unit,
+                                start_date, end_date, status, progress_percentage
+                            ) VALUES (
+                                :u_id, :g_type, :val, :unit, :s_date, :e_date, 'active', 0.0
+                            ) RETURNING goal_id
+                        """), {
+                            "u_id": user_id,
+                            "g_type": goal_type,
+                            "val": target_value,
+                            "unit": target_unit,
+                            "s_date": today,
+                            "e_date": end_date
+                        })
+                        row = res.fetchone()
+                        goal_id = row[0] if row else None
                     else:
-                        goal_id = 1
+                        res = conn.execute(text("""
+                            INSERT INTO goals (
+                                user_id, goal_type, target_value, target_unit,
+                                start_date, end_date, status, progress_percentage
+                            ) VALUES (
+                                :u_id, :g_type, :val, :unit, :s_date, :e_date, 'active', 0.0
+                            )
+                        """), {
+                            "u_id": user_id,
+                            "g_type": goal_type,
+                            "val": target_value,
+                            "unit": target_unit,
+                            "s_date": today,
+                            "e_date": end_date
+                        })
+                        if hasattr(res, "lastrowid") and res.lastrowid:
+                            goal_id = res.lastrowid
+                        else:
+                            goal_id = None
             except Exception:
-                goal_id = 1
-        else:
-            goal_id = 1
+                # Graceful fallback if database is offline
+                goal_id = None
+
+        if not goal_id:
+            user_goals = self._in_memory_goals.setdefault(user_id, [])
+            goal_id = len(user_goals) + 1
+            user_goals.append({
+                "goal_id": goal_id,
+                "user_id": user_id,
+                "goal_type": goal_type,
+                "target_value": target_value,
+                "target_unit": target_unit,
+                "start_date": str(today),
+                "end_date": str(end_date),
+                "status": "active",
+                "progress_percentage": 0.0
+            })
 
         return {
             "goal_id": goal_id,
@@ -195,7 +232,7 @@ class GoalRecommendationService:
             "target_unit": target_unit,
             "start_date": str(today),
             "end_date": str(end_date),
-            "is_active": True,
-            "status": "adopted",
-            "message": f"Successfully activated new {goal_type.replace('_', ' ')} goal."
+            "status": "active",
+            "progress_percentage": 0.0,
+            "message": f"Successfully adopted '{goal_type}' goal."
         }

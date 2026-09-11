@@ -23,7 +23,7 @@ def get_goal_recommendations():
     """
     Feature 6: Returns 3 tailored smart goal recommendations respecting WHO health guidelines.
     """
-    user_id = g.current_user["user_id"]
+    user_id = int(request.args.get("user_id", g.current_user["user_id"]))
     res = _goals_service.generate_recommendations(user_id=user_id)
     return jsonify(res), 200
 
@@ -35,8 +35,8 @@ def adopt_goal():
     """
     Feature 6: Adopts a smart goal into the active database records.
     """
-    user_id = g.current_user["user_id"]
     body = request.get_json(silent=True) or {}
+    user_id = int(body.get("user_id", g.current_user["user_id"]))
 
     goal_type = body.get("goal_type")
     target_value = body.get("target_value")

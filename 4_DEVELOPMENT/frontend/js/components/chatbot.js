@@ -106,6 +106,32 @@ export class ChatbotDrawer {
     this.messagesEl.appendChild(userBubble);
     this.scrollToBottom();
 
+    // Check authentication state before sending
+    if (!this.apiClient.isAuthenticated()) {
+      const authBubble = document.createElement("div");
+      authBubble.className = "chat-bubble bot";
+      authBubble.style.borderLeft = "3px solid var(--accent-amber)";
+      authBubble.innerHTML = `
+        <p style="color: var(--text-primary); margin-bottom: 0.5rem;">
+          🔒 <strong>Authentication Required:</strong> Please log in to consult the AI Water Conservation Advisor.
+        </p>
+        <button type="button" class="btn-chat-login-action" style="font-size: 0.8rem; padding: 0.35rem 0.75rem; background: var(--accent-cyan); color: #000; font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer;">
+          Log In to Chat
+        </button>
+      `;
+      this.messagesEl.appendChild(authBubble);
+      const loginBtn = authBubble.querySelector(".btn-chat-login-action");
+      if (loginBtn) {
+        loginBtn.addEventListener("click", () => {
+          if (window.smartWaterApp && window.smartWaterApp.openAuthModal) {
+            window.smartWaterApp.openAuthModal();
+          }
+        });
+      }
+      this.scrollToBottom();
+      return;
+    }
+
     // 2. Append Optimistic Loading Indicator
     const typingBubble = document.createElement("div");
     typingBubble.className = "chat-bubble bot typing-indicator";
@@ -155,10 +181,31 @@ export class ChatbotDrawer {
 
     } catch (err) {
       typingBubble.remove();
+      const is401 = err.message && err.message.includes("401");
       const errBubble = document.createElement("div");
       errBubble.className = "chat-bubble bot";
-      errBubble.style.borderColor = "var(--status-critical)";
-      errBubble.innerHTML = `<p style="color: var(--status-critical);">⚠️ Unable to connect to the local advisor service. Please verify that the server is running.</p>`;
+      errBubble.style.borderColor = is401 ? "var(--accent-amber)" : "var(--status-critical)";
+
+      if (is401) {
+        errBubble.innerHTML = `
+          <p style="color: var(--text-primary); margin-bottom: 0.5rem;">
+            🔒 <strong>Authentication Required:</strong> Your session has expired or login is required to consult the advisor.
+          </p>
+          <button type="button" class="btn-chat-login-action" style="font-size: 0.8rem; padding: 0.35rem 0.75rem; background: var(--accent-cyan); color: #000; font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer;">
+            Log In Again
+          </button>
+        `;
+        const loginBtn = errBubble.querySelector(".btn-chat-login-action");
+        if (loginBtn) {
+          loginBtn.addEventListener("click", () => {
+            if (window.smartWaterApp && window.smartWaterApp.openAuthModal) {
+              window.smartWaterApp.openAuthModal();
+            }
+          });
+        }
+      } else {
+        errBubble.innerHTML = `<p style="color: var(--status-critical);">⚠️ Unable to connect to the local advisor service. Please verify that the server is running.</p>`;
+      }
       this.messagesEl.appendChild(errBubble);
       this.scrollToBottom();
     }

@@ -48,14 +48,169 @@ class DashboardApp {
     // Persona Switcher Event
     const personaSelect = document.getElementById("persona-select");
     if (personaSelect) {
-      personaSelect.addEventListener("change", (e) => {
+      personaSelect.addEventListener("change", async (e) => {
         this.currentUserId = parseInt(e.target.value, 10);
-        this.loadActiveTab();
+        await this.apiClient.syncPersona(this.currentUserId);
+        this.updateAuthUI();
+        await this.loadActiveTab();
       });
+    }
+
+    // Initialize Auth Modal & UI
+    this.initAuthModal();
+
+    // In dev mode, initialize token for default persona if not already authenticated
+    if (!this.apiClient.isAuthenticated()) {
+      await this.apiClient.syncPersona(this.currentUserId);
+      this.updateAuthUI();
     }
 
     // Initial Data Load
     await this.loadActiveTab();
+  }
+
+  initAuthModal() {
+    const authBtn = document.getElementById("btn-auth-login");
+    const modal = document.getElementById("auth-modal-backdrop");
+    const closeBtn = document.getElementById("btn-close-auth-modal");
+    const cancelBtn = document.getElementById("btn-cancel-auth-modal");
+    const form = document.getElementById("auth-login-form");
+    const logoutBtn = document.getElementById("btn-auth-logout");
+    const errorEl = document.getElementById("auth-login-error");
+
+    this.updateAuthUI();
+
+    if (authBtn) {
+      authBtn.addEventListener("click", () => this.openAuthModal());
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => this.closeAuthModal());
+    }
+
+    if (cancelBtn) {
+      cancelBtn.addEventListener("click", () => this.closeAuthModal());
+    }
+
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) this.closeAuthModal();
+      });
+    }
+
+    // Demo persona autofill buttons
+    document.querySelectorAll(".btn-demo-fill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const email = btn.getAttribute("data-email");
+        const uid = btn.getAttribute("data-uid");
+        const emailInput = document.getElementById("input-auth-email");
+        const passInput = document.getElementById("input-auth-password");
+        if (emailInput && email) emailInput.value = email;
+        if (passInput) passInput.value = "ResidentPass2026!";
+        if (uid && personaSelect) personaSelect.value = uid;
+      });
+    });
+
+    // Handle Login Submit
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById("input-auth-email");
+        const passInput = document.getElementById("input-auth-password");
+        const submitBtn = document.getElementById("btn-submit-auth-login");
+
+        if (!emailInput || !passInput) return;
+        const email = emailInput.value.trim();
+        const password = passInput.value;
+
+        if (errorEl) {
+          errorEl.style.display = "none";
+          errorEl.textContent = "";
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Authenticating...";
+        }
+
+        try {
+          const data = await this.apiClient.login(email, password);
+          if (data && data.user) {
+            this.currentUserId = data.user.user_id;
+            const personaSelect = document.getElementById("persona-select");
+            if (personaSelect) personaSelect.value = String(data.user.user_id);
+          }
+          this.updateAuthUI();
+          this.closeAuthModal();
+          await this.loadActiveTab();
+        } catch (err) {
+          if (errorEl) {
+            errorEl.textContent = err.message || "Authentication failed. Please check credentials.";
+            errorEl.style.display = "block";
+          }
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Sign In";
+          }
+        }
+      });
+    }
+
+    // Handle Logout
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        this.apiClient.logout();
+        this.updateAuthUI();
+        this.closeAuthModal();
+      });
+    }
+  }
+
+  openAuthModal() {
+    const modal = document.getElementById("auth-modal-backdrop");
+    const errorEl = document.getElementById("auth-login-error");
+    if (errorEl) {
+      errorEl.style.display = "none";
+      errorEl.textContent = "";
+    }
+    if (modal) {
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+    }
+    const authBtn = document.getElementById("btn-auth-login");
+    if (authBtn) authBtn.setAttribute("aria-expanded", "true");
+  }
+
+  closeAuthModal() {
+    const modal = document.getElementById("auth-modal-backdrop");
+    if (modal) {
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+    }
+    const authBtn = document.getElementById("btn-auth-login");
+    if (authBtn) authBtn.setAttribute("aria-expanded", "false");
+  }
+
+  updateAuthUI() {
+    const authLabel = document.getElementById("auth-btn-label");
+    const authIcon = document.getElementById("auth-btn-icon");
+    const logoutBtn = document.getElementById("btn-auth-logout");
+    const submitBtn = document.getElementById("btn-submit-auth-login");
+
+    if (this.apiClient.isAuthenticated()) {
+      const user = this.apiClient.getCurrentUser();
+      const userName = user ? (user.first_name || user.email.split("@")[0]) : "User";
+      if (authLabel) authLabel.textContent = `${userName}`;
+      if (authIcon) authIcon.textContent = "🔓";
+      if (logoutBtn) logoutBtn.style.display = "inline-block";
+      if (submitBtn) submitBtn.textContent = "Switch Account";
+    } else {
+      if (authLabel) authLabel.textContent = "Log In";
+      if (authIcon) authIcon.textContent = "🔐";
+      if (logoutBtn) logoutBtn.style.display = "none";
+      if (submitBtn) submitBtn.textContent = "Sign In";
+    }
   }
 
   initTheme() {
@@ -111,7 +266,7 @@ class DashboardApp {
         await this.loadDashboardData();
         break;
       case "simulator":
-        renderSavingsSimulator(this.apiClient, () => this.currentUserId);
+        await renderSavingsSimulator(this.apiClient, () => this.currentUserId);
         break;
       case "sustainability":
         await renderSustainabilityScore(this.apiClient, () => this.currentUserId);

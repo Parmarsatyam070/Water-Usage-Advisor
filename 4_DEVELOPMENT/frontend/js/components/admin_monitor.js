@@ -8,24 +8,109 @@ export async function renderAdminMonitor(apiClient, getUserId) {
   const container = document.getElementById("admin-container");
   if (!container) return;
 
-  const userId = getUserId();
+  const isAuthenticated = apiClient && apiClient.isAuthenticated();
+
+  if (!isAuthenticated) {
+    container.innerHTML = `
+      <div class="card" style="padding: 2rem; text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🔒</div>
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+          Authentication Required
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); max-width: 480px; margin: 0 auto 1.25rem;">
+          Please sign in with municipal credentials (e.g. Elena Rostova - Municipal Operator) to inspect district-level administration and system health telemetry.
+        </p>
+        <button type="button" class="btn-chart-toggle active btn-admin-login" style="padding: 0.5rem 1.25rem; font-size: 0.85rem;">
+          Sign In to Access Admin Monitor
+        </button>
+      </div>
+    `;
+    const loginBtn = container.querySelector(".btn-admin-login");
+    if (loginBtn) {
+      loginBtn.addEventListener("click", () => {
+        if (window.smartWaterApp && window.smartWaterApp.openAuthModal) {
+          window.smartWaterApp.openAuthModal();
+        }
+      });
+    }
+    return;
+  }
+
   let summary = null;
 
   try {
     summary = await apiClient.fetchSystemSummary();
   } catch (err) {
-    container.innerHTML = `
-      <div class="card" style="padding: 1.5rem; text-align: center;">
-        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
-        <div style="font-size: 1.1rem; font-weight: 700; color: var(--status-critical); margin-bottom: 0.25rem;">
-          Access Denied: Municipal Role Required
+    const is403 = err.message && (err.message.includes("403") || err.message.includes("Forbidden") || err.message.includes("role"));
+    const is401 = err.message && err.message.includes("401");
+
+    if (is401) {
+      container.innerHTML = `
+        <div class="card" style="padding: 2rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🔒</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+            Session Expired
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); max-width: 480px; margin: 0 auto 1.25rem;">
+            Your session has expired. Please log in again with municipal privileges.
+          </p>
+          <button type="button" class="btn-chart-toggle active btn-admin-relogin" style="padding: 0.5rem 1.25rem; font-size: 0.85rem;">
+            Log In Again
+          </button>
         </div>
-        <div style="font-size: 0.8rem; color: var(--text-secondary);">
-          This operational monitoring dashboard is restricted to authorized municipal operators and district administrators.
-          Select Persona 3 (Elena Rostova - Municipal) from the top profile switcher to evaluate administrative telemetry.
+      `;
+      const reloginBtn = container.querySelector(".btn-admin-relogin");
+      if (reloginBtn) {
+        reloginBtn.addEventListener("click", () => {
+          if (window.smartWaterApp && window.smartWaterApp.openAuthModal) {
+            window.smartWaterApp.openAuthModal();
+          }
+        });
+      }
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="card" style="padding: 2rem; text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🛡️</div>
+        <div style="font-size: 1.2rem; font-weight: 700; color: var(--status-critical); margin-bottom: 0.5rem;">
+          Access Denied: Municipal Role Required (HTTP 403)
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.5;">
+          This operational monitoring dashboard is restricted to authorized municipal operators and district administrators. Your current account does not hold the <code>municipal</code> or <code>admin</code> role.
+        </p>
+        <div style="display: flex; gap: 0.75rem; justify-content: center; align-items: center;">
+          <button type="button" id="btn-switch-to-municipal" class="btn-chart-toggle active" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+            Switch to Elena Rostova (Municipal)
+          </button>
         </div>
       </div>
     `;
+
+    const switchBtn = document.getElementById("btn-switch-to-municipal");
+    if (switchBtn) {
+      switchBtn.addEventListener("click", async () => {
+        switchBtn.disabled = true;
+        switchBtn.textContent = "Switching Role...";
+        const syncResult = await apiClient.syncPersona(3);
+        if (syncResult) {
+          const personaSelect = document.getElementById("persona-select");
+          if (personaSelect) personaSelect.value = "3";
+          if (window.smartWaterApp) {
+            window.smartWaterApp.currentUserId = 3;
+            window.smartWaterApp.updateAuthUI();
+          }
+          await renderAdminMonitor(apiClient, () => 3);
+        } else {
+          // If in production mode where demo token is disabled, open auth modal with Elena's email
+          if (window.smartWaterApp && window.smartWaterApp.openAuthModal) {
+            window.smartWaterApp.openAuthModal();
+            const emailInput = document.getElementById("input-auth-email");
+            if (emailInput) emailInput.value = "elena.rostova@smartwater.internal";
+          }
+        }
+      });
+    }
     return;
   }
 

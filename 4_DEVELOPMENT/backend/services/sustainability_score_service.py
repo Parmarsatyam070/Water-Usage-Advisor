@@ -128,12 +128,58 @@ class SustainabilityScoreService:
             grade = "F"
             rating = "Critical Action Required"
 
+        # Generate deterministic explanation and improvement opportunities
+        opportunities = []
+        if s_anom < 100.0:
+            opportunities.append({
+                "category": "anomaly",
+                "title": "Resolve Active Anomalies",
+                "impact": f"+{100.0 - s_anom:.0f} potential anomaly component points",
+                "action": "Acknowledge and inspect flagged continuous or off-peak leak incidents in Alerts Manager."
+            })
+        if s_eff < 85.0:
+            opportunities.append({
+                "category": "efficiency",
+                "title": "Optimize Daily Consumption vs Benchmark",
+                "impact": f"Targeting benchmark of {benchmark_lpd:.0f} L/d can increase efficiency score from {s_eff:.1f} toward 100.0",
+                "action": "Install low-flow aerators or adjust automated garden irrigation schedules."
+            })
+        if s_goal < 75.0:
+            opportunities.append({
+                "category": "goal",
+                "title": "Adopt a Tailored SMART Conservation Goal",
+                "impact": "Goal achievement contributes up to 25% of your total sustainability score",
+                "action": "Select a recommended starter or balanced goal in Goals & Budget Planner."
+            })
+        if s_trend < 80.0:
+            opportunities.append({
+                "category": "trend",
+                "title": "Stabilize Consumption Trajectory",
+                "impact": "Stable or decreasing trends earn maximum trend component points",
+                "action": "Review recent daytime surge periods and shift non-essential water usage."
+            })
+        if not opportunities:
+            opportunities.append({
+                "category": "maintenance",
+                "title": "Maintain Exemplary Efficiency",
+                "impact": "Current usage patterns maintain optimal composite score",
+                "action": "Continue regular fixture checks and monitor weekly diurnal curves."
+            })
+
+        explanation = (
+            f"Overall score of {total_score}/100 (Grade {grade}: {rating}) reflects "
+            f"efficiency ({s_eff:.1f}/100), anomaly health ({s_anom:.1f}/100), "
+            f"goal progress ({s_goal:.1f}/100), and trend trajectory ({s_trend:.1f}/100)."
+        )
+
         return {
             "user_id": user_id,
             "meter_id": profile.get("meter_id", user_id),
             "sustainability_score": total_score,
             "grade": grade,
             "rating": rating,
+            "explanation": explanation,
+            "improvement_opportunities": opportunities,
             "components": {
                 "efficiency": {
                     "score": round(s_eff, 1),

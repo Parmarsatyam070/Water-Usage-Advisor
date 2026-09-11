@@ -34,6 +34,7 @@ class ScenarioAnalysisService:
     def __init__(self, data_service=None, db_engine=None):
         self.data_service = data_service or get_data_service()
         self._db_engine = db_engine
+        self._in_memory_scenarios = {}
 
     def _get_engine(self):
         if self._db_engine is None:
@@ -129,6 +130,7 @@ class ScenarioAnalysisService:
         return {
             "scenario_id": scenario_id,
             "scenario_name": scenario_name,
+            "category": norm_cat,
             "target_category": norm_cat,
             "percentage_change": percentage_change,
             "baseline_daily_liters": round(baseline_daily, 2),
@@ -162,43 +164,80 @@ class ScenarioAnalysisService:
     ) -> Optional[int]:
         """Saves scenario to the `scenarios` table if database is connected."""
         eng = self._get_engine()
-        if not eng:
-            return None
+        if eng:
+            try:
+                with eng.begin() as conn:
+                    if eng.dialect.name == "postgresql":
+                        res = conn.execute(text("""
+                            INSERT INTO scenarios (
+                                user_id, scenario_name, category, percentage_change,
+                                baseline_liters, scenario_liters, saved_liters,
+                                estimated_savings_amount, explanation
+                            ) VALUES (
+                                :u_id, :s_name, :cat, :pct, :base, :scen, :saved, :amt, :exp
+                            ) RETURNING scenario_id
+                        """), {
+                            "u_id": user_id,
+                            "s_name": scenario_name,
+                            "cat": category,
+                            "pct": percentage_change,
+                            "base": baseline_liters,
+                            "scen": scenario_liters,
+                            "saved": saved_liters,
+                            "amt": max(0.0, savings_amount),
+                            "exp": explanation
+                        })
+                        row = res.fetchone()
+                        return row[0] if row else 1
+                    else:
+                        res = conn.execute(text("""
+                            INSERT INTO scenarios (
+                                user_id, scenario_name, category, percentage_change,
+                                baseline_liters, scenario_liters, saved_liters,
+                                estimated_savings_amount, explanation
+                            ) VALUES (
+                                :u_id, :s_name, :cat, :pct, :base, :scen, :saved, :amt, :exp
+                            )
+                        """), {
+                            "u_id": user_id,
+                            "s_name": scenario_name,
+                            "cat": category,
+                            "pct": percentage_change,
+                            "base": baseline_liters,
+                            "scen": scenario_liters,
+                            "saved": saved_liters,
+                            "amt": max(0.0, savings_amount),
+                            "exp": explanation
+                        })
+                        if hasattr(res, "lastrowid") and res.lastrowid:
+                            return res.lastrowid
+                        return 1
+            except Exception:
+                pass
 
-        try:
-            with eng.begin() as conn:
-                res = conn.execute(text("""
-                    INSERT INTO scenarios (
-                        user_id, scenario_name, category, percentage_change,
-                        baseline_liters, scenario_liters, saved_liters,
-                        estimated_savings_amount, explanation
-                    ) VALUES (
-                        :u_id, :s_name, :cat, :pct, :base, :scen, :saved, :amt, :exp
-                    )
-                """), {
-                    "u_id": user_id,
-                    "s_name": scenario_name,
-                    "cat": category,
-                    "pct": percentage_change,
-                    "base": baseline_liters,
-                    "scen": scenario_liters,
-                    "saved": saved_liters,
-                    "amt": max(0.0, savings_amount),
-                    "exp": explanation
-                })
-                # Attempt to retrieve primary key if supported
-                if hasattr(res, "lastrowid") and res.lastrowid:
-                    return res.lastrowid
-                return 1
-        except Exception:
-            # Fallback gracefully if DB is offline
-            return None
+        # Fallback to in-memory history when DB is offline
+        user_scenarios = self._in_memory_scenarios.setdefault(user_id, [])
+        scen_id = len(user_scenarios) + 1
+        record = {
+            "scenario_id": scen_id,
+            "scenario_name": scenario_name,
+            "category": category,
+            "percentage_change": percentage_change,
+            "baseline_liters": baseline_liters,
+            "scenario_liters": scenario_liters,
+            "saved_liters": saved_liters,
+            "estimated_savings_amount": max(0.0, savings_amount),
+            "explanation": explanation,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        user_scenarios.insert(0, record)
+        return scen_id
 
     def get_scenario_history(self, user_id: int, limit: int = 10) -> List[Dict[str, Any]]:
         """Retrieves previously saved scenarios for the user."""
         eng = self._get_engine()
         if not eng:
-            return []
+            return self._in_memory_scenarios.get(user_id, [])[:limit]
 
         try:
             with eng.connect() as conn:
@@ -226,6 +265,8 @@ class ScenarioAnalysisService:
                         "explanation": row[8],
                         "created_at": str(row[9])
                     })
+                if not history and user_id in self._in_memory_scenarios:
+                    return self._in_memory_scenarios[user_id][:limit]
                 return history
         except Exception:
-            return []
+            return self._in_memory_scenarios.get(user_id, [])[:limit]

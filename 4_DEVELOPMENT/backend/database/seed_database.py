@@ -151,6 +151,19 @@ def seed_database(engine=None, csv_path="4_DEVELOPMENT/data/generated/water_usag
                 "sdate": g[5], "edate": g[6], "prog": g[7], "status": g[8]
             })
 
+        # Synchronize identity sequences in PostgreSQL so subsequent inserts do not collide
+        if eng.dialect.name == "postgresql":
+            tables_to_sync = [
+                ("users", "user_id"),
+                ("meters", "meter_id"),
+                ("consumption_categories", "category_id"),
+                ("goals", "goal_id")
+            ]
+            for tbl, col in tables_to_sync:
+                conn.execute(text(f"""
+                    SELECT setval(pg_get_serial_sequence('{tbl}', '{col}'), COALESCE((SELECT MAX({col}) FROM {tbl}), 1));
+                """))
+
     print("==================================================")
     print("DATABASE SEEDING COMPLETED SUCCESSFULLY!")
     print("==================================================")

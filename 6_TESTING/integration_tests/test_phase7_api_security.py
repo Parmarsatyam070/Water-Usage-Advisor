@@ -194,3 +194,49 @@ class TestPhase7SecurityCategories:
         res = client.post("/api/water/budget", json={"user_id": 2, "period": "monthly", "target_liters": 500}, headers=headers)
         assert res.status_code == 403
         assert res.json["error_code"] == "FORBIDDEN"
+
+
+class TestChatbotAuthRegression:
+    """Focused regression tests for the chatbot authentication flow."""
+
+    def test_unauthenticated_chatbot_request_returns_401(self, client):
+        """Unauthenticated POST /api/dashboard/chat must return 401."""
+        res = client.post("/api/dashboard/chat", json={"user_id": 1, "message": "How do I fix a leak?"})
+        assert res.status_code == 401
+        assert res.json.get("error_code") == "UNAUTHORIZED"
+
+    def test_authenticated_chatbot_request_returns_200(self, client, user1_token):
+        """Authenticated POST /api/dashboard/chat with valid JWT must return 200 and response."""
+        headers = {"Authorization": f"Bearer {user1_token}"}
+        res = client.post(
+            "/api/dashboard/chat",
+            json={"user_id": 1, "message": "How do I fix a leak?"},
+            headers=headers
+        )
+        assert res.status_code == 200
+        assert "answer" in res.json or "conversational_response" in res.json
+        assert res.json.get("session_id") is not None
+
+    def test_invalid_token_returns_401(self, client):
+        """Chatbot request with invalid JWT format/signature must return 401."""
+        headers = {"Authorization": "Bearer invalid.fake.token"}
+        res = client.post("/api/dashboard/chat", json={"user_id": 1, "message": "Hello"}, headers=headers)
+        assert res.status_code == 401
+        assert res.json.get("error_code") in ["INVALID_TOKEN", "UNAUTHORIZED"]
+
+    def test_expired_token_returns_401(self, client):
+        """Chatbot request with expired JWT must return 401."""
+        from backend.services.auth_service import get_auth_service, SEEDED_DEMO_USERS
+        auth = get_auth_service()
+        expired_token = auth.generate_token(SEEDED_DEMO_USERS[1], expires_in_hours=-1)
+        headers = {"Authorization": f"Bearer {expired_token}"}
+        res = client.post("/api/dashboard/chat", json={"user_id": 1, "message": "Hello"}, headers=headers)
+        assert res.status_code == 401
+        assert res.json.get("error_code") in ["TOKEN_EXPIRED", "UNAUTHORIZED"]
+
+    def test_cross_user_access_protected(self, client, user1_token):
+        """User 1's token cannot query chatbot for User 2's context (BOLA/IDOR protection)."""
+        headers = {"Authorization": f"Bearer {user1_token}"}
+        res = client.post("/api/dashboard/chat", json={"user_id": 2, "message": "Cross-user inquiry"}, headers=headers)
+        assert res.status_code == 403
+        assert res.json.get("error_code") == "FORBIDDEN"

@@ -9,17 +9,74 @@
 export class DashboardApiClient {
   constructor(baseUrl = "") {
     this.baseUrl = baseUrl;
-    this.authToken = null;
+    this.authToken = (typeof localStorage !== "undefined" ? localStorage.getItem("swa_auth_token") : null) || null;
   }
 
   setAuthToken(token) {
     this.authToken = token;
+    if (typeof localStorage !== "undefined") {
+      if (token) {
+        localStorage.setItem("swa_auth_token", token);
+      } else {
+        localStorage.removeItem("swa_auth_token");
+        localStorage.removeItem("swa_current_user");
+      }
+    }
+  }
+
+  getAuthToken() {
+    if (!this.authToken && typeof localStorage !== "undefined") {
+      this.authToken = localStorage.getItem("swa_auth_token") || null;
+    }
+    return this.authToken;
+  }
+
+  isAuthenticated() {
+    return Boolean(this.getAuthToken());
+  }
+
+  getCurrentUser() {
+    if (typeof localStorage === "undefined") return null;
+    try {
+      return JSON.parse(localStorage.getItem("swa_current_user") || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  async login(email, password) {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: String(email).trim(), password: String(password) })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || `HTTP ${response.status}: Authentication failed`);
+      }
+      if (data.token) {
+        this.setAuthToken(data.token);
+        if (data.user && typeof localStorage !== "undefined") {
+          localStorage.setItem("swa_current_user", JSON.stringify(data.user));
+        }
+      }
+      return data;
+    } catch (err) {
+      console.error("ApiClient: Login error", err.message);
+      throw err;
+    }
+  }
+
+  logout() {
+    this.setAuthToken(null);
   }
 
   _getHeaders(extraHeaders = {}) {
     const headers = { ...extraHeaders };
-    if (this.authToken) {
-      headers["Authorization"] = `Bearer ${this.authToken}`;
+    const token = this.getAuthToken();
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
     }
     return headers;
   }
@@ -110,10 +167,17 @@ export class DashboardApiClient {
         headers: this._getHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({ user_id: userId, message: message })
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}: Failed to send chat message`);
+      if (response.status === 401) {
+        this.setAuthToken(null);
+        throw new Error("HTTP 401: Authentication required");
+      }
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `HTTP ${response.status}: Failed to send chat message`);
+      }
       return await response.json();
     } catch (err) {
-      console.error("ApiClient: Failed to send chat message", err);
+      console.error("ApiClient: Failed to send chat message", err.message);
       throw err;
     }
   }
@@ -314,12 +378,68 @@ export class DashboardApiClient {
     }
   }
 
-  // Feature 9: Report URLs
-  getReportCsvUrl(userId = 1) {
-    return `${this.baseUrl}/api/reports/water.csv?user_id=${userId}`;
+  // Feature 9: Authenticated Reports Exports
+  async downloadReportCsv(userId = 1) {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/reports/water.csv?user_id=${userId}`, {
+        headers: this._getHeaders()
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: Failed to export CSV report`);
+      }
+      const blob = await response.blob();
+      if (typeof window !== "undefined") {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = `water_audit_report_user_${userId}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 100);
+      }
+      return true;
+    } catch (err) {
+      console.error("ApiClient: Failed to export CSV", err);
+      throw err;
+    }
   }
 
-  getReportPdfUrl(userId = 1) {
-    return `${this.baseUrl}/api/reports/water.pdf?user_id=${userId}`;
+  async fetchReportHtml(userId = 1) {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/reports/water.html?user_id=${userId}`, {
+        headers: this._getHeaders()
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: Failed to generate executive report`);
+      }
+      return await response.text();
+    } catch (err) {
+      console.error("ApiClient: Failed to generate executive report", err);
+      throw err;
+    }
+  }
+
+  // Persona synchronization (strictly isolated to development/demo mode)
+  async syncPersona(userId = 1) {
+    try {
+      const response = await fetch(`${this.baseUrl}/api/auth/demo-token?user_id=${userId}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.token) {
+          this.setAuthToken(data.token);
+          if (data.user && typeof localStorage !== "undefined") {
+            localStorage.setItem("swa_current_user", JSON.stringify(data.user));
+          }
+          return data;
+        }
+      }
+      return null;
+    } catch {
+      return null;
+    }
   }
 }

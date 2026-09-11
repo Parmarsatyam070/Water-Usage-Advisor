@@ -47,7 +47,10 @@ class WaterSavingsService:
             Dictionary containing baseline, projected consumption, savings, and disclaimers.
         """
         if baseline_consumption is None or baseline_consumption < 0:
-            raise ValueError("Baseline consumption must be a non-negative number.")
+            raise ValueError("Baseline consumption must be non-negative.")
+
+        if rate_per_kiloliter is not None and rate_per_kiloliter < 0:
+            raise ValueError("Rate per kiloliter must be non-negative.")
 
         normalized_period = period.lower().strip() if period else "monthly"
         if normalized_period not in WaterSavingsService.PERIOD_MULTIPLIERS:
